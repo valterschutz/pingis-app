@@ -15,12 +15,12 @@ export default function Dropdown({items}) {
     </div>
     {isActive && <div class="dropdown-menu" id="dropdown-menu" role="menu">
       <div class="dropdown-content">
-        {items.map((item,i) => <a class={`dropdown-item ${i === selectedIndex && 'is-active'}`} onClick={() => {
+        {items.map((item,i) => <button class={`dropdown-item ${i === selectedIndex && 'is-active'}`} onClick={() => {
           setSelectedIndex(i)
           setIsActive(false)
         }}>
                           {item}
-                         </a>)}
+                         </button>)}
       </div>
     </div>}
   </div>

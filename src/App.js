@@ -1,7 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, addDoc, setDoc, getDocs, collection } from 'firebase/firestore';
+import { getFirestore, getDocs, collection } from 'firebase/firestore';
 import Dropdown from './components/Dropdown';
 import { useState } from 'react';
 
@@ -22,15 +21,15 @@ const db = getFirestore(app)
 
 const playersCollection = collection(db, 'players')
 const players = await getDocs(playersCollection)
-const matchesCollection = collection(db, 'matches')
-const matches = await getDocs(matchesCollection)
+// const matchesCollection = collection(db, 'matches')
+// const matches = await getDocs(matchesCollection)
 
 players.forEach(doc => {
   console.log(doc.id, ' => ', doc.data());
 })
 
 function App() {
-  const [players, setPlayers] = useState(['Valter', 'Filip', 'Victor', 'Lotta', 'Elias'])
+  const [players,] = useState(['Valter', 'Filip', 'Victor', 'Lotta', 'Elias'])
   const [player1Index, setPlayer1Index] = useState(0)
   const [player2Index, setPlayer2Index] = useState(1)
   return (
