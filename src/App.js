@@ -30,10 +30,10 @@ function App() {
   const [player2Index, setPlayer2Index] = useState(1)
   const [player1Score, setPlayer1Score] = useState(0)
   const [player2Score, setPlayer2Score] = useState(0)
-  const [isError, setIsError] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState(null)
 
-  console.log(`${player1Index} ${player2Index}`)
+  const isError = submitStatus === 'error'
+  // const isSuccess = submitStatus === 'success'
 
   return (
     <div className="App is-flex is-flex-direction-column is-justify-content-space-between">
@@ -62,26 +62,23 @@ function App() {
             })
             setPlayer1Score(0)
             setPlayer2Score(0)
-            setIsSuccess(true)
+            setSubmitStatus('success')
             setTimeout(() => {
-              setIsSuccess(false)
-            }, 3000);
+              setSubmitStatus(null)
+            }, 6000);
           } catch (error) {
             console.log(`Error: ${error}`);
-            setIsError(true)
+            setSubmitStatus('error')
             setTimeout(() => {
-              setIsError(false)
-            }, 3000);
+              setSubmitStatus(null)
+            }, 6000);
           }
         }}>Submit</button>
 
       </div>
       <div className="section">
-      {isError && <div class="notification is-danger">
-          Error
-        </div>}
-        {isSuccess && <div class="notification is-success">
-          Submited successfully
+        {submitStatus !== null && <div class={`notification ${isError ? 'is-danger' : 'is-success'}`}>
+          {isError ? 'Error' : 'Success'}
         </div>}
       </div>
     </div>
