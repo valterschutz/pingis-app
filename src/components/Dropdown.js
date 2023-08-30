@@ -1,12 +1,11 @@
 import { useState } from "react"
 
-export default function Dropdown({items}) {
+export default function Dropdown({items, index, setIndex}) {
   const [isActive, setIsActive] = useState(false)
-  const [selectedIndex, setSelectedIndex] = useState(0)
-  const selectedItem = items[selectedIndex]
+  const selectedItem = items[index]
   return <div class={`dropdown ${isActive && 'is-active'}`}>
     <div class="dropdown-trigger">
-      <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => setIsActive(!isActive)}>
+      <button class="button is-large" aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => setIsActive(!isActive)}>
         <span>{selectedItem}</span>
         <span class="icon is-small">
           <i class="fas fa-angle-down" aria-hidden="true"></i>
@@ -15,12 +14,12 @@ export default function Dropdown({items}) {
     </div>
     {isActive && <div class="dropdown-menu" id="dropdown-menu" role="menu">
       <div class="dropdown-content">
-        {items.map((item,i) => <button class={`dropdown-item ${i === selectedIndex && 'is-active'}`} onClick={() => {
-          setSelectedIndex(i)
+        {items.map((item,i) => <div class={`dropdown-item is-clickable is-size-4 ${i === index && 'is-active'}`} onClick={() => {
+          setIndex(i)
           setIsActive(false)
         }}>
                           {item}
-                         </button>)}
+                         </div>)}
       </div>
     </div>}
   </div>
