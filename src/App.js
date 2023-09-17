@@ -1,4 +1,3 @@
-import './App.css';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, getDocs, doc, addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import Dropdown from './components/Dropdown';
@@ -41,59 +40,60 @@ function App() {
     <div className="App is-flex is-flex-direction-column is-justify-content-space-between">
       <div className="section">
         <div className="columns">
-          <div className="column">
+          <div className="column is-flex is-flex-direction-column is-align-items-center">
             <Dropdown items={players.map(p => p.firstName)} index={player1Index} setIndex={setPlayer1Index} />
             <input type="number" className="input is-large mt-3" value={player1Score} onChange={e => {
               setPlayer1Score(parseInt(e.target.value))
             }} />
           </div>
-          <div className="column">
+          <div className="column is-flex is-flex-direction-column is-align-items-center">
             <Dropdown items={players.map(p => p.firstName)} index={player2Index} setIndex={setPlayer2Index} />
             <input type="number" className="input is-large mt-3" value={player2Score} onChange={e => setPlayer2Score(parseInt(e.target.value))} />
           </div>
         </div>
 
-        <button className="button is-primary is-large" onClick={async () => {
-          try {
-            await addDoc(matchesCollection, {
-              player1: doc(db, 'players', playersDocs[player1Index].id),
-              player2: doc(db, 'players', playersDocs[player2Index].id),
-              player1Score: player1Score,
-              player2Score: player2Score,
-              when: serverTimestamp()
-            })
+        <div className="is-flex is-flex-direction-column is-align-items-center">
+          <button className="button is-primary is-large" onClick={async () => {
+            try {
+              await addDoc(matchesCollection, {
+                player1: doc(db, 'players', playersDocs[player1Index].id),
+                player2: doc(db, 'players', playersDocs[player2Index].id),
+                player1Score: player1Score,
+                player2Score: player2Score,
+                when: serverTimestamp()
+              })
 
-            // Text to speech stuff
-            let msg = new SpeechSynthesisUtterance();
+              // Text to speech stuff
+              let msg = new SpeechSynthesisUtterance();
 
-            if (player1Score === player2Score) {
-              msg.text = `${player1Score} - ${player2Score} draw`;
-            } else {
-              const winner = player1Score > player2Score ? player1 : player2
-              const winnerScore = player1Score > player2Score ? player1Score : player2Score
-              const loserScore = player1Score > player2Score ? player2Score : player1Score
-              const loser = player1Score > player2Score ? player2 : player1
-              msg.text = `${winner.firstName} won with ${winnerScore} - ${loserScore} against ${loser.firstName}`
+              if (player1Score === player2Score) {
+                msg.text = `${player1Score} - ${player2Score} draw`;
+              } else {
+                const winner = player1Score > player2Score ? player1 : player2
+                const winnerScore = player1Score > player2Score ? player1Score : player2Score
+                const loserScore = player1Score > player2Score ? player2Score : player1Score
+                const loser = player1Score > player2Score ? player2 : player1
+                msg.text = `${winner.firstName} won with ${winnerScore} - ${loserScore} against ${loser.firstName}`
+              }
+              window.speechSynthesis.speak(msg);
+
+              setPlayer1Score(0)
+              setPlayer2Score(0)
+              setSubmitStatus('success')
+              setSubmitText(msg.text)
+              setTimeout(() => {
+                setSubmitStatus(null)
+              }, 6000);
+            } catch (error) {
+              console.log(`Error: ${error}`);
+              setSubmitStatus('error')
+              setSubmitText("Error")
+              setTimeout(() => {
+                setSubmitStatus(null)
+              }, 6000);
             }
-            window.speechSynthesis.speak(msg);
-
-            setPlayer1Score(0)
-            setPlayer2Score(0)
-            setSubmitStatus('success')
-            setSubmitText(msg.text)
-            setTimeout(() => {
-              setSubmitStatus(null)
-            }, 6000);
-          } catch (error) {
-            console.log(`Error: ${error}`);
-            setSubmitStatus('error')
-            setSubmitText("Error")
-            setTimeout(() => {
-              setSubmitStatus(null)
-            }, 6000);
-          }
-        }}>Submit</button>
-
+          }}>Submit</button>
+        </div>
       </div>
       <div className="section">
         {submitStatus !== null && <div class={`notification ${isError ? 'is-danger' : 'is-success'}`}>
