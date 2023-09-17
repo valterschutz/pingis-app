@@ -31,9 +31,11 @@ function App() {
   const [player1Score, setPlayer1Score] = useState(0)
   const [player2Score, setPlayer2Score] = useState(0)
   const [submitStatus, setSubmitStatus] = useState(null)
+  const [submitText, setSubmitText] = useState("")
 
   const isError = submitStatus === 'error'
-  // const isSuccess = submitStatus === 'success'
+  const player1 = players[player1Index]
+  const player2 = players[player2Index]
 
   return (
     <div className="App is-flex is-flex-direction-column is-justify-content-space-between">
@@ -60,15 +62,32 @@ function App() {
               player2Score: player2Score,
               when: serverTimestamp()
             })
+
+            // Text to speech stuff
+            let msg = new SpeechSynthesisUtterance();
+
+            if (player1Score === player2Score) {
+              msg.text = `${player1Score} - ${player2Score} draw`;
+            } else {
+              const winner = player1Score > player2Score ? player1 : player2
+              const winnerScore = player1Score > player2Score ? player1Score : player2Score
+              const loserScore = player1Score > player2Score ? player2Score : player1Score
+              const loser = player1Score > player2Score ? player2 : player1
+              msg.text = `${winner.firstName} won with ${winnerScore} - ${loserScore} against ${loser.firstName}`
+            }
+            window.speechSynthesis.speak(msg);
+
             setPlayer1Score(0)
             setPlayer2Score(0)
             setSubmitStatus('success')
+            setSubmitText(msg.text)
             setTimeout(() => {
               setSubmitStatus(null)
             }, 6000);
           } catch (error) {
             console.log(`Error: ${error}`);
             setSubmitStatus('error')
+            setSubmitText("Error")
             setTimeout(() => {
               setSubmitStatus(null)
             }, 6000);
@@ -78,7 +97,7 @@ function App() {
       </div>
       <div className="section">
         {submitStatus !== null && <div class={`notification ${isError ? 'is-danger' : 'is-success'}`}>
-          {isError ? 'Error' : 'Success'}
+          {submitText}
         </div>}
       </div>
     </div>
