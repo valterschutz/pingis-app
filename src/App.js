@@ -42,13 +42,23 @@ function App() {
         <div className="columns">
           <div className="column is-flex is-flex-direction-column is-align-items-center">
             <Dropdown items={players.map(p => p.firstName)} index={player1Index} setIndex={setPlayer1Index} />
-            <input type="number" className="input is-large mt-3" value={player1Score} onChange={e => {
-              setPlayer1Score(parseInt(e.target.value))
-            }} />
+            <div className="is-flex is-flex-direction-row is-align-items-center mt-3">
+              <button className="button is-large" onClick={() => {setPlayer1Score(player1Score-1)}}>-</button>
+              <input type="number" className="input is-large has-text-centered" value={player1Score} onChange={e => {
+                setPlayer1Score(parseInt(e.target.value))
+              }} />
+              <button className="button is-large" onClick={() => {setPlayer1Score(player1Score+1)}}>+</button>
+            </div>
           </div>
           <div className="column is-flex is-flex-direction-column is-align-items-center">
             <Dropdown items={players.map(p => p.firstName)} index={player2Index} setIndex={setPlayer2Index} />
-            <input type="number" className="input is-large mt-3" value={player2Score} onChange={e => setPlayer2Score(parseInt(e.target.value))} />
+            <div className="is-flex is-flex-direction-row is-align-items-center mt-3">
+              <button className="button is-large" onClick={() => {setPlayer2Score(player2Score-1)}}>-</button>
+              <input type="number" className="input is-large has-text-centered" value={player2Score} onChange={e => {
+                setPlayer2Score(parseInt(e.target.value))
+              }} />
+              <button className="button is-large" onClick={() => {setPlayer2Score(player2Score+1)}}>+</button>
+            </div>
           </div>
         </div>
 

@@ -4,19 +4,37 @@ html,
 body,
 #root,
 .App {
-    height: 100%;
+  height: 100%;
 }
 
 .notification {
-    animation: fadeInOut 6s forwards;
+  animation: fadeInOut 6s forwards;
 }
 
 
 @keyframes fadeInOut {
-    0%, 85%, 100% {
-      opacity: 0;
-    }
-    15%, 70% {
-      opacity: 1;
-    }
+
+  0%,
+  85%,
+  100% {
+    opacity: 0;
   }
+
+  15%,
+  70% {
+    opacity: 1;
+  }
+}
+
+/* Remove arrows from number inputs */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
