@@ -76,21 +76,23 @@ function App() {
               // Text to speech stuff
               let msg = new SpeechSynthesisUtterance();
 
+
               if (player1Score === player2Score) {
-                msg.text = `${player1Score} - ${player2Score} draw`;
+                msg.text = `${player1Score} ${player2Score} draw`;
+setSubmitText(`${player1Score} - ${player2Score} draw`)
               } else {
                 const winner = player1Score > player2Score ? player1 : player2
                 const winnerScore = player1Score > player2Score ? player1Score : player2Score
                 const loserScore = player1Score > player2Score ? player2Score : player1Score
                 const loser = player1Score > player2Score ? player2 : player1
-                msg.text = `${winner.firstName} won with ${winnerScore} - ${loserScore} against ${loser.firstName}`
+                msg.text = `${winner.firstName} won with ${winnerScore} ${loserScore} against ${loser.firstName}`
+setSubmitText(`${winner.firstName} won with ${winnerScore} - ${loserScore} against ${loser.firstName}`)
               }
               window.speechSynthesis.speak(msg);
 
               setPlayer1Score(0)
               setPlayer2Score(0)
               setSubmitStatus('success')
-              setSubmitText(msg.text)
               setTimeout(() => {
                 setSubmitStatus(null)
               }, 6000);
