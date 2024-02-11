@@ -29,8 +29,8 @@ function App() {
     <div className="App is-flex is-flex-direction-column is-justify-content-space-between">
       <div className="tabs is-centered">
         <ul>
-          <li class={tabIndex == 0 ? "is-active" : ""}><a onClick={() => setTabIndex(0)}>Entries</a></li>
-          <li class={tabIndex == 1 ? "is-active" : ""}><a onClick={() => setTabIndex(1)}>Stats</a></li>
+          <li class={tabIndex === 0 ? "is-active" : ""}><a onClick={() => setTabIndex(0)}>Entries</a></li>
+          <li class={tabIndex === 1 ? "is-active" : ""}><a onClick={() => setTabIndex(1)}>Stats</a></li>
         </ul>
       </div>
       {tabIndex === 0 && <Entries db={db} playersCollection={playersCollection} playersDocsQuery={playersDocsQuery} playersDocs={playersDocs} matchesCollection={matchesCollection} />}
