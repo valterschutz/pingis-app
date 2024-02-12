@@ -1,0 +1,21 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "plugin:jsx-a11y/recommended"
+    ],
+    "rules": {
+        "jsx-a11y/anchor-is-valid": [
+            "error",
+            {
+                "components": [
+                    "Link"
+                ],
+                "specialLink": [
+                    "to"
+                ]
+            }
+        ],
+        "no-undef": "warn", // Treats undefined variables as warnings
+        // Add more rules as needed
+    }
+}
