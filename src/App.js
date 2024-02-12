@@ -18,9 +18,10 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
 
 const playersCollection = collection(db, 'players')
-const playersDocsQuery = await getDocs(playersCollection)
-const playersDocs = playersDocsQuery.docs
+const playersSnapshot = await getDocs(playersCollection)
+const playersSnapshotDocs = playersSnapshot.docs
 const matchesCollection = collection(db, 'matches')
+const matchesSnapshot = await getDocs(matchesCollection)
 
 function App() {
   const [tabIndex, setTabIndex] = useState(0)
@@ -33,8 +34,8 @@ function App() {
           <li class={tabIndex === 1 ? "is-active" : ""}><a onClick={() => setTabIndex(1)}>Stats</a></li>
         </ul>
       </div>
-      {tabIndex === 0 && <Entries db={db} playersCollection={playersCollection} playersDocsQuery={playersDocsQuery} playersDocs={playersDocs} matchesCollection={matchesCollection} />}
-      {tabIndex === 1 && <Stats />}
+      {tabIndex === 0 && <Entries db={db} playersSnapshotDocs={playersSnapshotDocs} matchesCollection={matchesCollection} />}
+      {tabIndex === 1 && <Stats matchesSnapshot={matchesSnapshot} />}
     </div>
   );
 }
