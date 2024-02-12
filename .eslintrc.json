@@ -15,7 +15,6 @@
                 ]
             }
         ],
-        "no-undef": "warn", // Treats undefined variables as warnings
-        // Add more rules as needed
+        "no-undef": "warn"
     }
 }
