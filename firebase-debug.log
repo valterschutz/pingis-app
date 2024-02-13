@@ -1,39 +1,37 @@
-[debug] [2024-02-12T20:19:37.765Z] ----------------------------------------------------------------------
-[debug] [2024-02-12T20:19:37.766Z] Command:       /home/valter/.nvm/versions/node/v21.1.0/bin/node /home/valter/.nvm/versions/node/v21.1.0/bin/firebase serve
-[debug] [2024-02-12T20:19:37.766Z] CLI Version:   13.2.1
-[debug] [2024-02-12T20:19:37.766Z] Platform:      linux
-[debug] [2024-02-12T20:19:37.766Z] Node Version:  v21.1.0
-[debug] [2024-02-12T20:19:37.767Z] Time:          Mon Feb 12 2024 21:19:37 GMT+0100 (Central European Standard Time)
-[debug] [2024-02-12T20:19:37.767Z] ----------------------------------------------------------------------
+[debug] [2024-02-13T05:47:21.986Z] ----------------------------------------------------------------------
+[debug] [2024-02-13T05:47:21.987Z] Command:       /home/valter/.nvm/versions/node/v21.1.0/bin/node /home/valter/.nvm/versions/node/v21.1.0/bin/firebase serve
+[debug] [2024-02-13T05:47:21.987Z] CLI Version:   13.2.1
+[debug] [2024-02-13T05:47:21.987Z] Platform:      linux
+[debug] [2024-02-13T05:47:21.987Z] Node Version:  v21.1.0
+[debug] [2024-02-13T05:47:21.987Z] Time:          Tue Feb 13 2024 06:47:21 GMT+0100 (Central European Standard Time)
+[debug] [2024-02-13T05:47:21.987Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2024-02-12T20:19:37.812Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2024-02-12T20:19:37.812Z] > authorizing via signed-in user (pingisapp@gmail.com)
-[debug] [2024-02-12T20:19:37.812Z] [iam] checking project pingis-app for permissions ["firebase.projects.get"]
-[debug] [2024-02-12T20:19:37.813Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/pingis-app:testIamPermissions [none]
-[debug] [2024-02-12T20:19:37.813Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/pingis-app:testIamPermissions x-goog-quota-user=projects/pingis-app
-[debug] [2024-02-12T20:19:37.813Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/pingis-app:testIamPermissions {"permissions":["firebase.projects.get"]}
-[debug] [2024-02-12T20:19:38.573Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/pingis-app:testIamPermissions 200
-[debug] [2024-02-12T20:19:38.573Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/pingis-app:testIamPermissions {"permissions":["firebase.projects.get"]}
-[debug] [2024-02-12T20:19:38.573Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app [none]
-[debug] [2024-02-12T20:19:38.857Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app 200
-[debug] [2024-02-12T20:19:38.857Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app {"projectId":"pingis-app","projectNumber":"1099430337028","displayName":"Pingis App","name":"projects/pingis-app","resources":{"hostingSite":"pingis-app"},"state":"ACTIVE","etag":"1_2fc4f0ad-be49-4ac7-86ba-4bc507341a0f"}
+[debug] [2024-02-13T05:47:22.033Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-02-13T05:47:22.033Z] > authorizing via signed-in user (pingisapp@gmail.com)
+[debug] [2024-02-13T05:47:22.033Z] [iam] checking project pingis-app for permissions ["firebase.projects.get"]
+[debug] [2024-02-13T05:47:22.034Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/pingis-app:testIamPermissions [none]
+[debug] [2024-02-13T05:47:22.034Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/pingis-app:testIamPermissions x-goog-quota-user=projects/pingis-app
+[debug] [2024-02-13T05:47:22.034Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/pingis-app:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2024-02-13T05:47:22.791Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/pingis-app:testIamPermissions 200
+[debug] [2024-02-13T05:47:22.791Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/pingis-app:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2024-02-13T05:47:22.792Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app [none]
+[debug] [2024-02-13T05:47:23.132Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app 200
+[debug] [2024-02-13T05:47:23.132Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app {"projectId":"pingis-app","projectNumber":"1099430337028","displayName":"Pingis App","name":"projects/pingis-app","resources":{"hostingSite":"pingis-app"},"state":"ACTIVE","etag":"1_2fc4f0ad-be49-4ac7-86ba-4bc507341a0f"}
 [info] 
 [info] === Serving from '/home/valter/Documents/Dev/Web/pingis-app'...
 [info] 
-[debug] [2024-02-12T20:19:38.858Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/pingis-app/sites 
-[debug] [2024-02-12T20:19:39.857Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/pingis-app/sites 200
-[debug] [2024-02-12T20:19:39.858Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/pingis-app/sites {"sites":[{"name":"projects/pingis-app/sites/pingis-app","defaultUrl":"https://pingis-app.web.app","appId":"1:1099430337028:web:2a5177f5972820e7b93351","type":"DEFAULT_SITE"}]}
-[debug] [2024-02-12T20:19:39.858Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app/webApps/1:1099430337028:web:2a5177f5972820e7b93351/config [none]
-[debug] [2024-02-12T20:19:40.539Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app/webApps/1:1099430337028:web:2a5177f5972820e7b93351/config 200
-[debug] [2024-02-12T20:19:40.540Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app/webApps/1:1099430337028:web:2a5177f5972820e7b93351/config {"projectId":"pingis-app","appId":"1:1099430337028:web:2a5177f5972820e7b93351","storageBucket":"pingis-app.appspot.com","apiKey":"AIzaSyB0fVnzGA6ikLwft4VdHt8yrfrgqOKjI7M","authDomain":"pingis-app.firebaseapp.com","messagingSenderId":"1099430337028"}
-[debug] [2024-02-12T20:19:40.541Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app [none]
-[debug] [2024-02-12T20:19:40.755Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app 200
-[debug] [2024-02-12T20:19:40.755Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app {"projectId":"pingis-app","projectNumber":"1099430337028","displayName":"Pingis App","name":"projects/pingis-app","resources":{"hostingSite":"pingis-app"},"state":"ACTIVE","etag":"1_2fc4f0ad-be49-4ac7-86ba-4bc507341a0f"}
+[debug] [2024-02-13T05:47:23.134Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/pingis-app/sites 
+[debug] [2024-02-13T05:47:24.038Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/pingis-app/sites 200
+[debug] [2024-02-13T05:47:24.038Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/pingis-app/sites {"sites":[{"name":"projects/pingis-app/sites/pingis-app","defaultUrl":"https://pingis-app.web.app","appId":"1:1099430337028:web:2a5177f5972820e7b93351","type":"DEFAULT_SITE"}]}
+[debug] [2024-02-13T05:47:24.039Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app/webApps/1:1099430337028:web:2a5177f5972820e7b93351/config [none]
+[debug] [2024-02-13T05:47:24.665Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app/webApps/1:1099430337028:web:2a5177f5972820e7b93351/config 200
+[debug] [2024-02-13T05:47:24.665Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app/webApps/1:1099430337028:web:2a5177f5972820e7b93351/config {"projectId":"pingis-app","appId":"1:1099430337028:web:2a5177f5972820e7b93351","storageBucket":"pingis-app.appspot.com","apiKey":"AIzaSyB0fVnzGA6ikLwft4VdHt8yrfrgqOKjI7M","authDomain":"pingis-app.firebaseapp.com","messagingSenderId":"1099430337028"}
+[debug] [2024-02-13T05:47:24.667Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app [none]
+[debug] [2024-02-13T05:47:24.887Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app 200
+[debug] [2024-02-13T05:47:24.887Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/pingis-app {"projectId":"pingis-app","projectNumber":"1099430337028","displayName":"Pingis App","name":"projects/pingis-app","resources":{"hostingSite":"pingis-app"},"state":"ACTIVE","etag":"1_2fc4f0ad-be49-4ac7-86ba-4bc507341a0f"}
 [info] i  hosting[pingis-app]: Serving hosting files from: build {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mbuild\u001b[22m"}}
 [info] ✔  hosting[pingis-app]: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
-[info] i  hosting: ::1 - - [12/Feb/2024:20:19:42 +0000] "GET / HTTP/1.1" 200 651 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [12/Feb/2024:20:19:42 +0000] \"GET / HTTP/1.1\" 200 651 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0\""}}
-[info] i  hosting: ::1 - - [12/Feb/2024:20:19:42 +0000] "GET /static/css/main.f6fd8068.css HTTP/1.1" 200 - "http://localhost:5000/" "Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [12/Feb/2024:20:19:42 +0000] \"GET /static/css/main.f6fd8068.css HTTP/1.1\" 200 - \"http://localhost:5000/\" \"Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0\""}}
-[info] i  hosting: ::1 - - [12/Feb/2024:20:19:42 +0000] "GET /static/js/main.9e8fdae5.js HTTP/1.1" 200 - "http://localhost:5000/" "Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [12/Feb/2024:20:19:42 +0000] \"GET /static/js/main.9e8fdae5.js HTTP/1.1\" 200 - \"http://localhost:5000/\" \"Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0\""}}
-[info] i  hosting: ::1 - - [12/Feb/2024:20:19:42 +0000] "GET /static/js/main.9e8fdae5.js.map HTTP/1.1" 200 - "-" "Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [12/Feb/2024:20:19:42 +0000] \"GET /static/js/main.9e8fdae5.js.map HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0\""}}
-[info] i  hosting: ::1 - - [12/Feb/2024:20:19:43 +0000] "GET /react_devtools_backend_compact.js.map HTTP/1.1" 200 651 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [12/Feb/2024:20:19:43 +0000] \"GET /react_devtools_backend_compact.js.map HTTP/1.1\" 200 651 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0\""}}
-[info] i  hosting: ::1 - - [12/Feb/2024:20:19:44 +0000] "GET /static/js/main.9e8fdae5.js.map HTTP/1.1" 200 - "-" "Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [12/Feb/2024:20:19:44 +0000] \"GET /static/js/main.9e8fdae5.js.map HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0\""}}
+[info] i  hosting: ::1 - - [13/Feb/2024:05:47:26 +0000] "GET / HTTP/1.1" 200 651 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [13/Feb/2024:05:47:26 +0000] \"GET / HTTP/1.1\" 200 651 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0\""}}
+[info] i  hosting: ::1 - - [13/Feb/2024:05:47:26 +0000] "GET /static/css/main.f6fd8068.css HTTP/1.1" 200 - "http://localhost:5000/" "Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [13/Feb/2024:05:47:26 +0000] \"GET /static/css/main.f6fd8068.css HTTP/1.1\" 200 - \"http://localhost:5000/\" \"Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0\""}}
+[info] i  hosting: ::1 - - [13/Feb/2024:05:47:26 +0000] "GET /static/js/main.3fb5b16d.js HTTP/1.1" 200 - "http://localhost:5000/" "Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [13/Feb/2024:05:47:26 +0000] \"GET /static/js/main.3fb5b16d.js HTTP/1.1\" 200 - \"http://localhost:5000/\" \"Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0\""}}
+[info] i  hosting: ::1 - - [13/Feb/2024:05:47:28 +0000] "GET /static/js/main.3fb5b16d.js.map HTTP/1.1" 200 - "-" "Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [13/Feb/2024:05:47:28 +0000] \"GET /static/js/main.3fb5b16d.js.map HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0\""}}

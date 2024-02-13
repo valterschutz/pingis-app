@@ -40,10 +40,12 @@ const options = {
   },
 };
 
+
 function Stats({ matchesSnapshot }) {
   const [playersData, setPlayersData] = useState({})
   const playersNames = Object.keys(playersData)
-  const playersValues = Object.values(playersData)
+  //   console.log(playersData);
+  //   console.log(playersNames);
   //   const playerNames = ['Valter', 'Johan', 'Kalle']
   //   const playersData = {
   //     'Valter': { name: 'Valter', wins: 2, losses: 1, draws: 0 },
@@ -56,24 +58,25 @@ function Stats({ matchesSnapshot }) {
     datasets: [
       {
         label: 'Wins',
-        data: playersNames.map((name) => playersData[name].wins),
+        data: playersNames.map((name) => playersData[name]?.wins || 0),
         borderColor: 'hsl(141, 71%, 48%)',
         backgroundColor: 'hsla(141, 71%, 48%, 0.5)',
       },
       {
         label: 'Losses',
-        data: playersNames.map((name) => playersData[name].losses),
+        data: playersNames.map((name) => playersData[name]?.losses || 0),
         borderColor: 'hsl(348, 100%, 61%)',
         backgroundColor: 'hsla(348, 100%, 61%, 0.5)',
       },
       {
         label: 'Draws',
-        data: playersNames.map((name) => playersData[name].draws),
+        data: playersNames.map((name) => playersData[name]?.draws || 0),
         borderColor: 'hsl(48, 100%, 67%)',
         backgroundColor: 'hsla(48, 100%, 67%, 0.5)',
       },
     ],
   };
+  //   console.log(data);
 
   useEffect(() => {
     // Temporary player data during calculation
@@ -88,22 +91,22 @@ function Stats({ matchesSnapshot }) {
         const player1Name = `${player1Data.firstName} ${player1Data.lastName}`
         const player2Name = `${player2Data.firstName} ${player2Data.lastName}`
         // If some player is not in the data, add them
-        if (!playersData[player1Name]) {
-          playersData[player1Name] = { name: player1Name, wins: 0, losses: 0, draws: 0 }
+        if (!pd[player1Name]) {
+          pd[player1Name] = { name: player1Name, wins: 0, losses: 0, draws: 0 }
         }
-        if (!playersData[player2Name]) {
-          playersData[player2Name] = { name: player2Name, wins: 0, losses: 0, draws: 0 }
+        if (!pd[player2Name]) {
+          pd[player2Name] = { name: player2Name, wins: 0, losses: 0, draws: 0 }
         }
         // Calculate wins, losses, and draws
         if (player1Score > player2Score) {
-          playersData[player1Name].wins++
-          playersData[player2Name].losses++
+          pd[player1Name].wins++
+          pd[player2Name].losses++
         } else if (player1Score < player2Score) {
-          playersData[player2Name].wins++
-          playersData[player1Name].losses++
+          pd[player2Name].wins++
+          pd[player1Name].losses++
         } else {
-          playersData[player1Name].draws++
-          playersData[player2Name].draws++
+          pd[player1Name].draws++
+          pd[player2Name].draws++
         }
       }))
       console.log(pd);
