@@ -3,7 +3,6 @@ import { useState } from 'react';
 import Dropdown from './components/Dropdown';
 
 function Entries({ db, playersSnapshot }) {
-  const playersCollection = collection(db, 'players')
   const matchesCollection = collection(db, 'matches')
   const playersSnapshotDocs = playersSnapshot.docs
 

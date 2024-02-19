@@ -10,7 +10,7 @@ import {
 import { useState, useEffect } from 'react';
 
 import { Bar } from 'react-chartjs-2';
-import { getDoc, getDocs, collection } from 'firebase/firestore';
+import { getDocs, collection } from 'firebase/firestore';
 
 ChartJS.register(
   CategoryScale,
@@ -21,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-const options = {
+const winLossDrawOptions = {
   indexAxis: 'y',
   elements: {
     bar: {
@@ -40,23 +40,30 @@ const options = {
   },
 };
 
+const winRatioOptions = {
+  indexAxis: 'y',
+  elements: {
+    bar: {
+      borderWidth: 2,
+    },
+  },
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false,
+    },
+    title: {
+      display: true,
+      text: 'Win ratio',
+    },
+  },
+};
 
 function Stats({ db }) {
-  //   const matchesCollection = collection(db, 'matches')
-
   const [playersData, setPlayersData] = useState({})
   const playersNames = Object.keys(playersData)
-  //   console.log(playersData);
-  //   console.log(playersNames);
-  //   const playerNames = ['Valter', 'Johan', 'Kalle']
-  const fakePlayersData = {
-    'Valter': { name: 'Valter', wins: 2, losses: 1, draws: 0 },
-    'Johan': { name: 'Johan', wins: 1, losses: 2, draws: 0 },
-    'Kalle': { name: 'Kalle', wins: 1, losses: 1, draws: 1 },
-  }
-  const fakePlayersNames = Object.keys(fakePlayersData)
 
-  const data = {
+  const winLossDrawData = {
     labels: playersNames,
     datasets: [
       {
@@ -64,94 +71,84 @@ function Stats({ db }) {
         data: playersNames.map((name) => playersData[name]?.wins || 0),
         borderColor: 'hsl(141, 71%, 48%)',
         backgroundColor: 'hsla(141, 71%, 48%, 0.5)',
+        stack: 0,
       },
       {
         label: 'Losses',
         data: playersNames.map((name) => playersData[name]?.losses || 0),
         borderColor: 'hsl(348, 100%, 61%)',
         backgroundColor: 'hsla(348, 100%, 61%, 0.5)',
+        stack: 0,
       },
       {
         label: 'Draws',
         data: playersNames.map((name) => playersData[name]?.draws || 0),
         borderColor: 'hsl(48, 100%, 67%)',
         backgroundColor: 'hsla(48, 100%, 67%, 0.5)',
+        stack: 0,
       },
     ],
   };
-  const fakeData = {
-    labels: fakePlayersNames,
+
+  const winRatioData = {
+    labels: playersNames,
     datasets: [
       {
-        label: 'Wins',
-        data: fakePlayersNames.map((name) => fakePlayersData[name]?.wins || 0),
-        borderColor: 'hsl(141, 71%, 48%)',
-        backgroundColor: 'hsla(141, 71%, 48%, 0.5)',
-      },
-      {
-        label: 'Losses',
-        data: fakePlayersNames.map((name) => fakePlayersData[name]?.losses || 0),
-        borderColor: 'hsl(348, 100%, 61%)',
-        backgroundColor: 'hsla(348, 100%, 61%, 0.5)',
-      },
-      {
-        label: 'Draws',
-        data: fakePlayersNames.map((name) => fakePlayersData[name]?.draws || 0),
-        borderColor: 'hsl(48, 100%, 67%)',
-        backgroundColor: 'hsla(48, 100%, 67%, 0.5)',
+        label: 'Win Ratio',
+        data: playersNames.map((name) => {
+          const wins = playersData[name]?.wins || 0;
+          const losses = playersData[name]?.losses || 0;
+          return losses !== 0 ? (wins / (wins + losses)).toFixed(2) : wins.toFixed(2);
+        }),
+        borderColor: 'hsl(219, 100%, 50%)',
+        backgroundColor: 'hsla(219, 100%, 50%, 0.5)',
       },
     ],
   };
-  //   console.log(data);
+
 
   useEffect(() => {
-    // Temporary player data during calculation
-    let pd = { ...playersData }
     const fetchData = async () => {
-      const matchesSnapshot = await collection(db, 'matches').get()
+      const matchesSnapshot = await getDocs(collection(db, 'matches'))
+      let pd = {}
       matchesSnapshot.forEach(async (doc) => {
         const { player1, player2, player1Score, player2Score } = doc.data()
-        const player1Doc = await getDoc(player1)
-        const player1Data = player1Doc.data()
-        const player2Doc = await getDoc(player2)
-        const player2Data = player2Doc.data()
-        const player1Name = `${player1Data.firstName} ${player1Data.lastName}`
-        const player2Name = `${player2Data.firstName} ${player2Data.lastName}`
-        // If some player is not in the data, add them
-        if (!(player1Name in pd)) {
-          pd[player1Name] = { name: player1Name, wins: 0, losses: 0, draws: 0 }
+        const player1ID = player1.id
+        const player2ID = player2.id
+
+        // Update player 1
+        if (!pd[player1ID]) {
+          pd[player1ID] = { wins: 0, losses: 0, draws: 0 }
         }
-        if (!(player2Name in pd)) {
-          pd[player2Name] = { name: player2Name, wins: 0, losses: 0, draws: 0 }
-        }
-        // Calculate wins, losses, and draws
         if (player1Score > player2Score) {
-          pd[player1Name].wins++
-          pd[player2Name].losses++
+          pd[player1ID].wins++
         } else if (player1Score < player2Score) {
-          pd[player2Name].wins++
-          pd[player1Name].losses++
+          pd[player1ID].losses++
         } else {
-          pd[player1Name].draws++
-          pd[player2Name].draws++
+          pd[player1ID].draws++
+        }
+
+        // Update player 2
+        if (!pd[player2ID]) {
+          pd[player2ID] = { wins: 0, losses: 0, draws: 0 }
+        }
+        if (player2Score > player1Score) {
+          pd[player2ID].wins++
+        } else if (player2Score < player1Score) {
+          pd[player2ID].losses++
+        } else {
+          pd[player2ID].draws++
         }
       })
-      console.log('pd before setting state');
-      console.log(pd);
       setPlayersData(pd)
     }
     fetchData()
   }, [])
 
-  //   console.log(fakePlayersData);
-  //   console.log(playersData);
-  console.log('playersData:');
-  console.log(playersData);
-  console.log('playersNames:');
-  console.log(playersNames);
-
-  //   return <Bar data={data} options={options} />
-  return playersData ? <Bar data={data} options={options} /> : <div>Loading...</div>;
+  return <div className="section my-auto px-1 py-3">
+    <Bar data={winLossDrawData} options={winLossDrawOptions} />
+    <Bar data={winRatioData} options={winRatioOptions} />
+  </div>
 
 }
 
