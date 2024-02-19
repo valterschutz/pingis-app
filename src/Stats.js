@@ -29,6 +29,7 @@ const winLossDrawOptions = {
     },
   },
   responsive: true,
+  aspectRatio: 1,
   plugins: {
     legend: {
       position: 'top',
@@ -48,6 +49,7 @@ const winRatioOptions = {
     },
   },
   responsive: true,
+  aspectRatio: 1,
   plugins: {
     legend: {
       display: false,
