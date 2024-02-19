@@ -18,23 +18,23 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
 
 const playersCollection = collection(db, 'players')
-const playersDocsQuery = await getDocs(playersCollection)
-const playersDocs = playersDocsQuery.docs
-const matchesCollection = collection(db, 'matches')
+const playersSnapshot = await getDocs(playersCollection)
 
 function App() {
   const [tabIndex, setTabIndex] = useState(0)
 
   return (
     <div className="App is-flex is-flex-direction-column is-justify-content-space-between">
-      <div className="tabs is-centered is-fullwidth">
-        <ul>
-          <li class={tabIndex === 0 ? "is-active" : ""}><a onClick={() => setTabIndex(0)}>Entries</a></li>
-          <li class={tabIndex === 1 ? "is-active" : ""}><a onClick={() => setTabIndex(1)}>Stats</a></li>
-        </ul>
+      <div className="section px-0 py-0">
+        <div className="tabs is-centered is-fullwidth">
+          <ul>
+            <li class={tabIndex === 0 ? "is-active" : ""}><a onClick={() => setTabIndex(0)}>Entries</a></li>
+            <li class={tabIndex === 1 ? "is-active" : ""}><a onClick={() => setTabIndex(1)}>Stats</a></li>
+          </ul>
+        </div>
       </div>
-      {tabIndex === 0 && <Entries db={db} playersCollection={playersCollection} playersDocsQuery={playersDocsQuery} playersDocs={playersDocs} matchesCollection={matchesCollection} />}
-      {tabIndex === 1 && <Stats />}
+      {tabIndex === 0 && <Entries db={db} playersSnapshot={playersSnapshot} />}
+      {tabIndex === 1 && <Stats db={db} />}
     </div>
   );
 }

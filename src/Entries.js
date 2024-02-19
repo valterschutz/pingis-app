@@ -1,9 +1,12 @@
-import { doc, serverTimestamp, addDoc } from 'firebase/firestore';
+import { doc, serverTimestamp, addDoc, collection } from 'firebase/firestore';
 import { useState } from 'react';
 import Dropdown from './components/Dropdown';
 
-function Entries({ db, playersDocs, matchesCollection }) {
-  const [players,] = useState(playersDocs.map(doc => doc.data()))
+function Entries({ db, playersSnapshot }) {
+  const matchesCollection = collection(db, 'matches')
+  const playersSnapshotDocs = playersSnapshot.docs
+
+  const players = playersSnapshotDocs.map(doc => doc.data())
   const [player1Index, setPlayer1Index] = useState(0)
   const [player2Index, setPlayer2Index] = useState(1)
   const [player1Score, setPlayer1Score] = useState(0)
@@ -43,8 +46,8 @@ function Entries({ db, playersDocs, matchesCollection }) {
         <button className="button is-primary is-large" onClick={async () => {
           try {
             await addDoc(matchesCollection, {
-              player1: doc(db, 'players', playersDocs[player1Index].id),
-              player2: doc(db, 'players', playersDocs[player2Index].id),
+              player1: doc(db, 'players', playersSnapshotDocs[player1Index].id),
+              player2: doc(db, 'players', playersSnapshotDocs[player2Index].id),
               player1Score: player1Score,
               player2Score: player2Score,
               when: serverTimestamp()
