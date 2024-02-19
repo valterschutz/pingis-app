@@ -19,9 +19,7 @@ const db = getFirestore(app)
 
 const playersCollection = collection(db, 'players')
 const playersSnapshot = await getDocs(playersCollection)
-const playersSnapshotDocs = playersSnapshot.docs
-const matchesCollection = collection(db, 'matches')
-const matchesSnapshot = await getDocs(matchesCollection)
+// const playersSnapshotDocs = playersSnapshot.docs
 
 function App() {
   const [tabIndex, setTabIndex] = useState(0)
@@ -34,8 +32,8 @@ function App() {
           <li class={tabIndex === 1 ? "is-active" : ""}><a onClick={() => setTabIndex(1)}>Stats</a></li>
         </ul>
       </div>
-      {tabIndex === 0 && <Entries db={db} playersSnapshotDocs={playersSnapshotDocs} matchesCollection={matchesCollection} />}
-      {tabIndex === 1 && <Stats matchesSnapshot={matchesSnapshot} />}
+      {tabIndex === 0 && <Entries db={db} playersSnapshot={playersSnapshot} />}
+      {tabIndex === 1 && <Stats db={db} />}
     </div>
   );
 }

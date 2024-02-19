@@ -1,8 +1,12 @@
-import { doc, serverTimestamp, addDoc } from 'firebase/firestore';
+import { doc, serverTimestamp, addDoc, collection } from 'firebase/firestore';
 import { useState } from 'react';
 import Dropdown from './components/Dropdown';
 
-function Entries({ db, playersSnapshotDocs, matchesCollection }) {
+function Entries({ db, playersSnapshot }) {
+  const playersCollection = collection(db, 'players')
+  const matchesCollection = collection(db, 'matches')
+  const playersSnapshotDocs = playersSnapshot.docs
+
   const players = playersSnapshotDocs.map(doc => doc.data())
   const [player1Index, setPlayer1Index] = useState(0)
   const [player2Index, setPlayer2Index] = useState(1)
