@@ -3,6 +3,7 @@ import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { useState } from 'react';
 import Entries from './Entries';
 import Stats from './Stats';
+// import InfoBar from './components/InfoBar';
 
 const firebaseConfig = {
   apiKey: "AIzaSyB0fVnzGA6ikLwft4VdHt8yrfrgqOKjI7M",
@@ -17,11 +18,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
 
+// const matchesQuery = query(collection(db, 'matches'))
+// TODO
+
 const playersCollection = collection(db, 'players')
 const playersSnapshot = await getDocs(playersCollection)
 
 function App() {
   const [tabIndex, setTabIndex] = useState(0)
+  //   const [matches, setMatches] = useState([])
 
   return (
     <div className="App is-flex is-flex-direction-column is-justify-content-space-between">
@@ -35,6 +40,7 @@ function App() {
       </div>
       {tabIndex === 0 && <Entries db={db} playersSnapshot={playersSnapshot} />}
       {tabIndex === 1 && <Stats db={db} />}
+      {/* <InfoBar db={db} /> */}
     </div>
   );
 }
