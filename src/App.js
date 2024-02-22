@@ -1,9 +1,9 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, connectFirestoreEmulator } from 'firebase/firestore';
 import { useState } from 'react';
 import Entries from './Entries';
 import Stats from './Stats';
-// import InfoBar from './components/InfoBar';
+import { FirebaseContext } from './contexts';
 
 const firebaseConfig = {
   apiKey: "AIzaSyB0fVnzGA6ikLwft4VdHt8yrfrgqOKjI7M",
@@ -18,30 +18,27 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
 
-// const matchesQuery = query(collection(db, 'matches'))
-// TODO
-
-const playersCollection = collection(db, 'players')
-const playersSnapshot = await getDocs(playersCollection)
+// connectFirestoreEmulator(db, 'localhost', 8080)
 
 function App() {
   const [tabIndex, setTabIndex] = useState(0)
-  //   const [matches, setMatches] = useState([])
 
   return (
-    <div className="App is-flex is-flex-direction-column is-justify-content-space-between">
-      <div className="section px-0 py-0">
-        <div className="tabs is-centered is-fullwidth">
-          <ul>
-            <li class={tabIndex === 0 ? "is-active" : ""}><a onClick={() => setTabIndex(0)}>Entries</a></li>
-            <li class={tabIndex === 1 ? "is-active" : ""}><a onClick={() => setTabIndex(1)}>Stats</a></li>
-          </ul>
+    <FirebaseContext.Provider value={[app, null, db]}>
+      <div className="App is-flex is-flex-direction-column is-justify-content-space-between">
+        <div className="section px-0 py-0">
+          <div className="tabs is-centered is-fullwidth">
+            <ul>
+              <li className={tabIndex === 0 ? "is-active" : ""}><a onClick={() => setTabIndex(0)}>Entries</a></li>
+              <li className={tabIndex === 1 ? "is-active" : ""}><a onClick={() => setTabIndex(1)}>Stats</a></li>
+            </ul>
+          </div>
         </div>
-      </div>
-      {tabIndex === 0 && <Entries db={db} playersSnapshot={playersSnapshot} />}
-      {tabIndex === 1 && <Stats db={db} />}
-      {/* <InfoBar db={db} /> */}
-    </div>
+        {tabIndex === 0 && <Entries />}
+        {tabIndex === 1 && <Stats />}
+        {/* <InfoBar db={db} /> */}
+      </div >
+    </FirebaseContext.Provider>
   );
 }
 
