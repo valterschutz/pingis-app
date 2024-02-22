@@ -1,12 +1,17 @@
 import { doc, serverTimestamp, addDoc, collection } from 'firebase/firestore';
-import { useState } from 'react';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useState, useContext } from 'react';
 import Dropdown from './components/Dropdown';
+import { FirebaseContext } from './contexts';
 
-function Entries({ db, playersSnapshot }) {
+function Entries() {
+  const [app, auth, db] = useContext(FirebaseContext)
   const matchesCollection = collection(db, 'matches')
-  const playersSnapshotDocs = playersSnapshot.docs
+  const [playersData, playersLoading, playersError, playersSnapshot] = useCollectionData(collection(db, 'players'))
+  const players = playersData || []
 
-  const players = playersSnapshotDocs.map(doc => doc.data())
+
+  // Component state for the UI
   const [player1Index, setPlayer1Index] = useState(0)
   const [player2Index, setPlayer2Index] = useState(1)
   const [player1Score, setPlayer1Score] = useState(0)
@@ -46,8 +51,8 @@ function Entries({ db, playersSnapshot }) {
         <button className="button is-primary is-large" onClick={async () => {
           try {
             await addDoc(matchesCollection, {
-              player1: doc(db, 'players', playersSnapshotDocs[player1Index].id),
-              player2: doc(db, 'players', playersSnapshotDocs[player2Index].id),
+              player1: doc(db, 'players', playersSnapshot.docs[player1Index].id),
+              player2: doc(db, 'players', playersSnapshot.docs[player2Index].id),
               player1Score: player1Score,
               player2Score: player2Score,
               when: serverTimestamp()
@@ -88,7 +93,7 @@ function Entries({ db, playersSnapshot }) {
       </div>
     </div>
     <div className="section">
-      {submitStatus !== null && <div class={`notification ${isError ? 'is-danger' : 'is-success'}`}>
+      {submitStatus !== null && <div className={`notification ${isError ? 'is-danger' : 'is-success'}`}>
         {submitText}
       </div>}
     </div>
