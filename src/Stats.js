@@ -7,12 +7,10 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 import { Bar } from 'react-chartjs-2';
-import { collection } from 'firebase/firestore';
 import { useContext } from 'react';
-import { FirebaseContext } from './contexts';
+import { MatchesContext, PlayersContext } from './contexts';
 
 ChartJS.register(
   CategoryScale,
@@ -64,20 +62,10 @@ const winRatioOptions = {
 };
 
 function Stats() {
-  const [app, auth, db] = useContext(FirebaseContext)
-  const [playersData, playersLoading, playersError, playersSnapshot] = useCollectionData(collection(db, 'players'))
-  const [matchesData, matchesLoading, matchesError, matchesSnapshot] = useCollectionData(collection(db, 'matches'))
-
-  // Both players and matches have to be loaded before we can calculate stats
-  let players
-  let matches
-  if (playersLoading || matchesLoading) {
-    players = []
-    matches = []
-  } else {
-    players = playersData
-    matches = matchesData
-  }
+  const [playersData, playersLoading, playersError, playersSnapshot] = useContext(PlayersContext)
+  const [matchesData, matchesLoading, matchesError, matchesSnapshot] = useContext(MatchesContext)
+  const players = playersData || []
+  const matches = matchesData || []
   const playersNames = players.map(p => `${p.firstName} ${p.lastName}`)
 
   // Loop through all matches and calculate wins, losses, and draws for each player
