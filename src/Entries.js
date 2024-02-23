@@ -1,12 +1,50 @@
 import { doc, serverTimestamp, addDoc, collection } from 'firebase/firestore';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Dropdown from './components/Dropdown';
-import { FirebaseContext, PlayersContext } from './contexts';
+import { FirebaseContext, PlayersContext, MatchesContext } from './contexts';
 
 function Entries() {
   const [app, _, db] = useContext(FirebaseContext)
   const [playersData, playersLoading, playersError, playersSnapshot] = useContext(PlayersContext)
+  const [matchesData, matchesLoading, matchesError, matchesSnapshot] = useContext(MatchesContext)
   const players = playersData || []
+  const matches = matchesData || []
+  const [fireIndex, setFireIndex] = useState(null)
+
+  useEffect(() => {
+    // Check if someone is on fire each time a match is added
+    if (matches.length > 0) {
+      // Null timestamps count as the latest
+      matches.sort((a, b) => {
+        if (a.when === null) {
+          return -1
+        } else if (b.when === null) {
+          return 1
+        }
+        return b.when.seconds - a.when.seconds
+      }
+      )
+      // First match is the latest
+      const latestMatch = matches[0]
+      const latestWinner = latestMatch?.player1Score > latestMatch?.player2Score ? latestMatch.player1 : latestMatch.player2
+      const latestLoser = latestMatch?.player1Score > latestMatch?.player2Score ? latestMatch.player2 : latestMatch.player1
+      // Loop backwards through matches while the latest winner is still winning and the latest loser is still losing
+      for (let i = 1; i < matches.length; i++) {
+        const match = matches[i]
+        const winner = match?.player1Score > match?.player2Score ? match.player1 : match.player2
+        const loser = match?.player1Score > match?.player2Score ? match.player2 : match.player1
+        if (winner.id === latestWinner.id) {
+          if (loser.id === latestLoser.id) {
+            setFireIndex(playersSnapshot.docs.findIndex(p => p.id === latestWinner.id))
+            break
+          }
+        } else {
+          setFireIndex(null)
+          break
+        }
+      }
+    }
+  }, [matches])
 
   // Component state for the UI
   const [player1Index, setPlayer1Index] = useState(0)
@@ -23,7 +61,7 @@ function Entries() {
     <div className="section">
       <div className="columns">
         <div className="column is-flex is-flex-direction-column is-align-items-center">
-          <Dropdown items={players.map(p => p.firstName)} index={player1Index} setIndex={setPlayer1Index} />
+          <Dropdown items={players.map(p => p.firstName)} index={player1Index} setIndex={setPlayer1Index} fireIndex={fireIndex} />
           <div className="is-flex is-flex-direction-row is-align-items-center mt-3">
             <button className="button is-large" onClick={() => { setPlayer1Score(player1Score - 1) }}>-</button>
             <input type="number" className="input is-large has-text-centered" value={player1Score} onChange={e => {
@@ -33,7 +71,7 @@ function Entries() {
           </div>
         </div>
         <div className="column is-flex is-flex-direction-column is-align-items-center">
-          <Dropdown items={players.map(p => p.firstName)} index={player2Index} setIndex={setPlayer2Index} />
+          <Dropdown items={players.map(p => p.firstName)} index={player2Index} setIndex={setPlayer2Index} fireIndex={fireIndex} />
           <div className="is-flex is-flex-direction-row is-align-items-center mt-3">
             <button className="button is-large" onClick={() => { setPlayer2Score(player2Score - 1) }}>-</button>
             <input type="number" className="input is-large has-text-centered" value={player2Score} onChange={e => {

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react"
 
-export default function Dropdown({ items, index, setIndex }) {
+export default function Dropdown({ items, index, setIndex, fireIndex }) {
   const [isActive, setIsActive] = useState(false)
   const selectedItem = items[index]
   const dropdownRef = useRef(null)
@@ -20,22 +20,21 @@ export default function Dropdown({ items, index, setIndex }) {
 
   return <div ref={dropdownRef} className={`dropdown ${isActive && 'is-active'}`}>
     <div className="dropdown-trigger">
-      <button className="button is-large" aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => setIsActive(!isActive)}>
-        <span>{selectedItem}</span>
-        <span className="icon is-small">
-          <i className="fas fa-angle-down" aria-hidden="true"></i>
-        </span>
+      <button className={`button ${index === fireIndex ? 'is-danger' : ''} is-large`} aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => setIsActive(!isActive)}>
+        {index === fireIndex ? `🔥 ${selectedItem} 🔥` : selectedItem}
       </button>
     </div>
-    {isActive && <div className="dropdown-menu" id="dropdown-menu" role="menu">
-      <div className="dropdown-content">
-        {items.map((item, i) => <div key={i} className={`dropdown-item is-clickable is-size-4 ${i === index && 'is-active'}`} onClick={() => {
-          setIndex(i)
-          setIsActive(false)
-        }}>
-          {item}
-        </div>)}
+    {
+      isActive && <div className="dropdown-menu" id="dropdown-menu" role="menu">
+        <div className="dropdown-content">
+          {items.map((item, i) => <div key={i} className={`dropdown-item is-clickable is-size-4 ${i === index && 'is-active'}`} onClick={() => {
+            setIndex(i)
+            setIsActive(false)
+          }}>
+            {i === fireIndex ? `🔥 ${item} 🔥 ` : item}
+          </div>)}
+        </div>
       </div>
-    </div>}
-  </div>
+    }
+  </div >
 }
