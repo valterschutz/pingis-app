@@ -1,15 +1,12 @@
 import { doc, serverTimestamp, addDoc, collection } from 'firebase/firestore';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useState, useContext } from 'react';
 import Dropdown from './components/Dropdown';
-import { FirebaseContext } from './contexts';
+import { FirebaseContext, PlayersContext } from './contexts';
 
 function Entries() {
-  const [app, auth, db] = useContext(FirebaseContext)
-  const matchesCollection = collection(db, 'matches')
-  const [playersData, playersLoading, playersError, playersSnapshot] = useCollectionData(collection(db, 'players'))
+  const [app, _, db] = useContext(FirebaseContext)
+  const [playersData, playersLoading, playersError, playersSnapshot] = useContext(PlayersContext)
   const players = playersData || []
-
 
   // Component state for the UI
   const [player1Index, setPlayer1Index] = useState(0)
@@ -50,7 +47,7 @@ function Entries() {
       <div className="is-flex is-flex-direction-column is-align-items-center">
         <button className="button is-primary is-large" onClick={async () => {
           try {
-            await addDoc(matchesCollection, {
+            await addDoc(collection(db, 'matches'), {
               player1: doc(db, 'players', playersSnapshot.docs[player1Index].id),
               player2: doc(db, 'players', playersSnapshot.docs[player2Index].id),
               player1Score: player1Score,
