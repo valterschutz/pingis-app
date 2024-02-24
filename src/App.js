@@ -1,10 +1,14 @@
 import { initializeApp } from 'firebase/app';
+import { connectAuthEmulator, getAuth } from 'firebase/auth'
 import { getFirestore, collection, getDocs, connectFirestoreEmulator } from 'firebase/firestore';
 import { useState, useContext } from 'react';
 import Entries from './Entries';
 import Stats from './Stats';
 import { FirebaseContext, PlayersContext, MatchesContext } from './contexts';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import LoggedIn from './LoggedIn';
+import LoggedOut from './LoggedOut';
 
 const firebaseConfig = {
   apiKey: "AIzaSyB0fVnzGA6ikLwft4VdHt8yrfrgqOKjI7M",
@@ -18,35 +22,27 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
+const auth = getAuth(app)
 
-connectFirestoreEmulator(db, 'localhost', 8080)
+// connectFirestoreEmulator(db, 'localhost', 8080)
+// connectAuthEmulator(auth, 'http://localhost:9099')
 
 function App() {
   const [playersData, playersLoading, playersError, playersSnapshot] = useCollectionData(collection(db, 'players'))
   const [matchesData, matchesLoading, matchesError, matchesSnapshot] = useCollectionData(collection(db, 'matches'))
 
-  const [tabIndex, setTabIndex] = useState(0)
+  const [user, loading, error] = useAuthState(auth);
 
   return (
-    <FirebaseContext.Provider value={[app, null, db]}>
-      <PlayersContext.Provider value={[playersData, playersLoading, playersError, playersSnapshot]}>
-        <MatchesContext.Provider value={[matchesData, matchesLoading, matchesError, matchesSnapshot]}>
-          <div className="App is-flex is-flex-direction-column is-justify-content-space-between">
-            <div className="section px-0 py-0">
-              <div className="tabs is-centered is-fullwidth">
-                <ul>
-                  <li className={tabIndex === 0 ? "is-active" : ""}><a onClick={() => setTabIndex(0)}>Entries</a></li>
-                  <li className={tabIndex === 1 ? "is-active" : ""}><a onClick={() => setTabIndex(1)}>Stats</a></li>
-                </ul>
-              </div>
-            </div>
-            {tabIndex === 0 && <Entries />}
-            {tabIndex === 1 && <Stats />}
-            {/* <InfoBar db={db} /> */}
-          </div >
-        </MatchesContext.Provider>
-      </PlayersContext.Provider>
-    </FirebaseContext.Provider>
+    <div className="App">
+      <FirebaseContext.Provider value={[app, auth, db]}>
+        <PlayersContext.Provider value={[playersData, playersLoading, playersError, playersSnapshot]}>
+          <MatchesContext.Provider value={[matchesData, matchesLoading, matchesError, matchesSnapshot]}>
+            {user ? <LoggedIn /> : <LoggedOut />}
+          </MatchesContext.Provider>
+        </PlayersContext.Provider>
+      </FirebaseContext.Provider>
+    </div>
   );
 }
 
