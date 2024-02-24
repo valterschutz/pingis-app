@@ -58,32 +58,32 @@ function Entries() {
   const player2 = players[player2Index]
 
   return <>
-    <div className="section">
-      <div className="columns">
-        <div className="column is-flex is-flex-direction-column is-align-items-center">
+    <div>
+      <div>
+        <div>
           <Dropdown items={players.map(p => p.firstName)} index={player1Index} setIndex={setPlayer1Index} fireIndex={fireIndex} />
-          <div className="is-flex is-flex-direction-row is-align-items-center mt-3">
-            <button className="button is-large" onClick={() => { setPlayer1Score(player1Score - 1) }}>-</button>
-            <input type="number" className="input is-large has-text-centered" value={player1Score} onChange={e => {
+          <div>
+            <button onClick={() => { setPlayer1Score(player1Score - 1) }}>-</button>
+            <input type="number" value={player1Score} onChange={e => {
               setPlayer1Score(parseInt(e.target.value))
             }} />
-            <button className="button is-large" onClick={() => { setPlayer1Score(player1Score + 1) }}>+</button>
+            <button onClick={() => { setPlayer1Score(player1Score + 1) }}>+</button>
           </div>
         </div>
-        <div className="column is-flex is-flex-direction-column is-align-items-center">
+        <div>
           <Dropdown items={players.map(p => p.firstName)} index={player2Index} setIndex={setPlayer2Index} fireIndex={fireIndex} />
-          <div className="is-flex is-flex-direction-row is-align-items-center mt-3">
-            <button className="button is-large" onClick={() => { setPlayer2Score(player2Score - 1) }}>-</button>
-            <input type="number" className="input is-large has-text-centered" value={player2Score} onChange={e => {
+          <div>
+            <button onClick={() => { setPlayer2Score(player2Score - 1) }}>-</button>
+            <input type="number" value={player2Score} onChange={e => {
               setPlayer2Score(parseInt(e.target.value))
             }} />
-            <button className="button is-large" onClick={() => { setPlayer2Score(player2Score + 1) }}>+</button>
+            <button onClick={() => { setPlayer2Score(player2Score + 1) }}>+</button>
           </div>
         </div>
       </div>
 
-      <div className="is-flex is-flex-direction-column is-align-items-center">
-        <button className="button is-primary is-large" onClick={async () => {
+      <div>
+        <button onClick={async () => {
           try {
             await addDoc(collection(db, 'matches'), {
               player1: doc(db, 'players', playersSnapshot.docs[player1Index].id),
@@ -127,8 +127,8 @@ function Entries() {
         }}>Submit</button>
       </div>
     </div>
-    <div className="section">
-      {submitStatus !== null && <div className={`notification ${isError ? 'is-danger' : 'is-success'}`}>
+    <div>
+      {submitStatus !== null && <div>
         {submitText}
       </div>}
     </div>

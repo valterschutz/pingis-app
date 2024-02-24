@@ -6,13 +6,13 @@ import Settings from './Settings'
 function LoggedIn() {
   const [tabIndex, setTabIndex] = useState(0)
 
-  return <div className="App is-flex is-flex-direction-column is-justify-content-space-between">
-    <div className="section px-0 py-0">
-      <div className="tabs is-centered is-fullwidth">
+  return <div>
+    <div>
+      <div>
         <ul>
-          <li className={tabIndex === 0 ? "is-active" : ""}><a onClick={() => setTabIndex(0)}>Entries</a></li>
-          <li className={tabIndex === 1 ? "is-active" : ""}><a onClick={() => setTabIndex(1)}>Stats</a></li>
-          <li className={tabIndex === 2 ? "is-active" : ""}><a onClick={() => setTabIndex(2)}>Settings</a></li>
+          <li><a onClick={() => setTabIndex(0)}>Entries</a></li>
+          <li><a onClick={() => setTabIndex(1)}>Stats</a></li>
+          <li><a onClick={() => setTabIndex(2)}>Settings</a></li>
         </ul>
       </div>
     </div>

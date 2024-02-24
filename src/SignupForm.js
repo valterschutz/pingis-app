@@ -19,27 +19,27 @@ function SignupForm() {
   const [password, setPassword] = useState('')
 
   return <div>
-    <div className="field">
-      <label className="label">Email</label>
-      <div className="control has-icons-left has-icons-right">
-        <input className="input" type="email" value={email} onChange={e => setEmail(e.target.value)} />
-        <span className="icon is-small is-left">
+    <div>
+      <label>Email</label>
+      <div>
+        <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
+        <span>
           <FontAwesomeIcon icon={faEnvelope} />
         </span>
       </div>
     </div>
-    <div className="field">
-      <label className="label">Password</label>
-      <div className="control has-icons-left has-icons-right">
-        <input className="input" type="password" value={password} onChange={e => setPassword(e.target.value)} />
-        <span className="icon is-small is-left">
+    <div>
+      <label>Password</label>
+      <div>
+        <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
+        <span>
           <FontAwesomeIcon icon={faLock} />
         </span>
       </div>
     </div>
-    <div className="field">
-      <div className="control">
-        <button className={`button ${loading ? 'is-loading' : ''} is-primary`} onClick={() => createUserWithEmailAndPassword(email, password)}>Sign up</button>
+    <div>
+      <div>
+        <button onClick={() => createUserWithEmailAndPassword(email, password)}>Sign up</button>
       </div>
     </div>
     {error ? <InfoBar text={error.message} modifier="is-danger" /> : null}

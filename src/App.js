@@ -24,8 +24,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
 const auth = getAuth(app)
 
-// connectFirestoreEmulator(db, 'localhost', 8080)
-// connectAuthEmulator(auth, 'http://localhost:9099')
+connectFirestoreEmulator(db, 'localhost', 8080)
+connectAuthEmulator(auth, 'http://localhost:9099')
 
 function App() {
   const [playersData, playersLoading, playersError, playersSnapshot] = useCollectionData(collection(db, 'players'))
@@ -34,7 +34,7 @@ function App() {
   const [user, loading, error] = useAuthState(auth);
 
   return (
-    <div className="App">
+    <div className="App bg-apricot">
       <FirebaseContext.Provider value={[app, auth, db]}>
         <PlayersContext.Provider value={[playersData, playersLoading, playersError, playersSnapshot]}>
           <MatchesContext.Provider value={[matchesData, matchesLoading, matchesError, matchesSnapshot]}>
