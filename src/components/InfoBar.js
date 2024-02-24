@@ -1,7 +1,7 @@
-export default function InfoBar({ db }) {
+export default function InfoBar({ text, modifier }) {
   return <div className="section">
-    <div className="notification is-info">
-      This is a test app for a pingis league
+    <div className={`notification ${modifier}`}>
+      {text}
     </div>
   </div>
 }
