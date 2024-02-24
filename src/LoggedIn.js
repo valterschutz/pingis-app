@@ -2,24 +2,17 @@ import React, { useState } from 'react'
 import Entries from './Entries'
 import Stats from './Stats'
 import Settings from './Settings'
+import Navbar from './components/Navbar'
 
 function LoggedIn() {
   const [tabIndex, setTabIndex] = useState(0)
 
-  return <div>
-    <div>
-      <div>
-        <ul>
-          <li><a onClick={() => setTabIndex(0)}>Entries</a></li>
-          <li><a onClick={() => setTabIndex(1)}>Stats</a></li>
-          <li><a onClick={() => setTabIndex(2)}>Settings</a></li>
-        </ul>
-      </div>
-    </div>
+  return <>
+    <Navbar choices={['Entries', 'Stats', 'Settings']} fn={setTabIndex} />
     {tabIndex === 0 && <Entries />}
     {tabIndex === 1 && <Stats />}
     {tabIndex === 2 && <Settings />}
-  </div >
+  </>
 }
 
 export default LoggedIn

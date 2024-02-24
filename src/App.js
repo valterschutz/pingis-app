@@ -34,7 +34,7 @@ function App() {
   const [user, loading, error] = useAuthState(auth);
 
   return (
-    <div className="App bg-apricot">
+    <div className="App bg-apricot min-h-screen flex flex-col font-sans">
       <FirebaseContext.Provider value={[app, auth, db]}>
         <PlayersContext.Provider value={[playersData, playersLoading, playersError, playersSnapshot]}>
           <MatchesContext.Provider value={[matchesData, matchesLoading, matchesError, matchesSnapshot]}>

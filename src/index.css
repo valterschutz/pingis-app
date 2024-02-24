@@ -2,33 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body,
-#root,
-.App {
-  height: 100%;
-  font-family: 'Inter', sans-serif;
-}
-
-/* .notification {
-  animation: fadeInOut 6s forwards;
-}
-
-
-@keyframes fadeInOut {
-
-  0%,
-  85%,
-  100% {
-    opacity: 0;
-  }
-
-  15%,
-  70% {
-    opacity: 1;
-  }
-} */
-
 /* Remove arrows from number inputs */
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

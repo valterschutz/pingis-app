@@ -11,8 +11,8 @@ module.exports = {
     },
     extend: {
       colors: {
-        'red': '#D53228',
-        'apricot': '#F1B26D',
+        'pingpongred': '#D53228',
+        'apricot': '#FCBC72',
         'scarlet': '#C42625',
         'palegrey': '#E3E3E3',
         'melon': '#E96C4E',

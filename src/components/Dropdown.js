@@ -18,16 +18,16 @@ export default function Dropdown({ items, index, setIndex, fireIndex }) {
     };
   }, []);
 
-  return <div ref={dropdownRef} className={`dropdown ${isActive && 'is-active'}`}>
-    <div className="dropdown-trigger">
-      <button className={`button ${index === fireIndex ? 'is-danger' : ''} is-large`} aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => setIsActive(!isActive)}>
+  return <div ref={dropdownRef}>
+    <div>
+      <button className={`${isActive ? 'invisible' : 'visible'} text-center h-10 rounded-lg w-40 text-white text-2xl bg-darkbrown shadow-md`} aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => setIsActive(!isActive)}>
         {index === fireIndex ? `🔥 ${selectedItem} 🔥` : selectedItem}
       </button>
     </div>
     {
-      isActive && <div className="dropdown-menu" id="dropdown-menu" role="menu">
-        <div className="dropdown-content">
-          {items.map((item, i) => <div key={i} className={`dropdown-item is-clickable is-size-4 ${i === index && 'is-active'}`} onClick={() => {
+      isActive && <div id="dropdown-menu" role="menu">
+        <div className="divide-y flex flex-col gap-1">
+          {items.map((item, i) => <div className="hover:cursor-pointer brightness-75 flex flex-col justify-center text-center h-10 rounded-lg w-40 text-white text-2xl bg-darkbrown" key={i} onClick={() => {
             setIndex(i)
             setIsActive(false)
           }}>
