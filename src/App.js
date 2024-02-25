@@ -1,9 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { connectAuthEmulator, getAuth } from 'firebase/auth'
 import { getFirestore, collection, getDocs, connectFirestoreEmulator } from 'firebase/firestore';
-import { useState, useContext } from 'react';
-import Entries from './Entries';
-import Stats from './Stats';
 import { FirebaseContext, PlayersContext, MatchesContext } from './contexts';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -24,8 +21,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
 const auth = getAuth(app)
 
-connectFirestoreEmulator(db, 'localhost', 8080)
-connectAuthEmulator(auth, 'http://localhost:9099')
+// connectFirestoreEmulator(db, 'localhost', 8080)
+// connectAuthEmulator(auth, 'http://localhost:9099')
 
 function App() {
   const [playersData, playersLoading, playersError, playersSnapshot] = useCollectionData(collection(db, 'players'))

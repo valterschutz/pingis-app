@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { useSignOut } from 'react-firebase-hooks/auth';
 import { FirebaseContext } from './contexts';
-import InfoBar from './components/InfoBox';
 import BigButton from './components/BigButton';
 
 function Settings() {

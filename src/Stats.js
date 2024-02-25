@@ -134,7 +134,7 @@ function Stats() {
     ],
   };
 
-  return <div>
+  return <div className="bg-white p-4">
     <Bar data={winLossDrawData} options={winLossDrawOptions} />
     <Bar data={winRatioData} options={winRatioOptions} />
   </div>

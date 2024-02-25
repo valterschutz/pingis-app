@@ -104,8 +104,8 @@ function Entries() {
   const player1 = players[player1Index]
   const player2 = players[player2Index]
 
-  return <div className="flex-grow flex flex-col justify-end items-center">
-    <div className="flex flex-col gap-8 justify-center items-center">
+  return <div className="flex-grow flex flex-col justify-between items-center">
+    <div className="flex flex-col gap-8 justify-center items-center mt-36">
       <div className="flex flex-col justify-center items-center">
         <Dropdown items={players.map(p => p.firstName)} index={player1Index} setIndex={setPlayer1Index} fireIndex={fireIndex} />
         <ScoreIncrementer score={player1Score} setScore={setPlayer1Score} />
