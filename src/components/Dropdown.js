@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react"
+import AnimatedButton from "./AnimatedButton"
 
 export default function Dropdown({ items, index, setIndex, fireIndex }) {
   const [isActive, setIsActive] = useState(false)
@@ -20,9 +21,9 @@ export default function Dropdown({ items, index, setIndex, fireIndex }) {
 
   return <div ref={dropdownRef}>
     <div>
-      <button className={`${isActive ? 'invisible' : 'visible'} text-center h-10 rounded-lg w-40 text-white text-2xl bg-darkbrown shadow-md`} aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => setIsActive(!isActive)}>
+      <AnimatedButton classes={`${isActive ? 'invisible' : 'visible'} text-center h-10 rounded-lg w-40 text-white text-2xl bg-darkbrown shadow-md`} aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => setIsActive(!isActive)}>
         {index === fireIndex ? `🔥 ${selectedItem} 🔥` : selectedItem}
-      </button>
+      </AnimatedButton>
     </div>
     {
       isActive && <div id="dropdown-menu" role="menu">
