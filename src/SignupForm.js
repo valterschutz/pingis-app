@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import React, { useContext, useEffect, useState } from 'react';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { useContext } from 'react';
 import { FirebaseContext } from './contexts';
-import InfoBar from './components/InfoBar';
+import Form from './Form';
+import InfoBox from './components/InfoBox';
 
-function SignupForm() {
+export default function SignupForm() {
   const [app, auth, db] = useContext(FirebaseContext)
   const [
     createUserWithEmailAndPassword,
@@ -14,36 +12,20 @@ function SignupForm() {
     loading,
     error,
   ] = useCreateUserWithEmailAndPassword(auth);
+  const errorMessage = error?.message
+  const [visibleError, setVisibleError] = useState(false)
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  useEffect(() => {
+    if (error) {
+      setVisibleError(true)
+      const timeout = setTimeout(() => {
+        setVisibleError(false)
+      }, 2000)
+    }
+  }, [error])
 
-  return <div>
-    <div className="field">
-      <label className="label">Email</label>
-      <div className="control has-icons-left has-icons-right">
-        <input className="input" type="email" value={email} onChange={e => setEmail(e.target.value)} />
-        <span className="icon is-small is-left">
-          <FontAwesomeIcon icon={faEnvelope} />
-        </span>
-      </div>
-    </div>
-    <div className="field">
-      <label className="label">Password</label>
-      <div className="control has-icons-left has-icons-right">
-        <input className="input" type="password" value={password} onChange={e => setPassword(e.target.value)} />
-        <span className="icon is-small is-left">
-          <FontAwesomeIcon icon={faLock} />
-        </span>
-      </div>
-    </div>
-    <div className="field">
-      <div className="control">
-        <button className={`button ${loading ? 'is-loading' : ''} is-primary`} onClick={() => createUserWithEmailAndPassword(email, password)}>Sign up</button>
-      </div>
-    </div>
-    {error ? <InfoBar text={error.message} modifier="is-danger" /> : null}
-  </div>
+  return <div className="flex-grow flex flex-col justify-between items-center">
+    <Form buttonText="Sign up" buttonFn={createUserWithEmailAndPassword} />
+    <InfoBox text={errorMessage} isVisible={visibleError} />
+  </div >
 }
-
-export default SignupForm;

@@ -1,28 +1,15 @@
-@import 'bulma/css/bulma.css';
-
-html,
-body,
-#root,
-.App {
-  height: 100%;
-}
-
-.notification {
-  animation: fadeInOut 6s forwards;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 
-@keyframes fadeInOut {
-
-  0%,
-  85%,
-  100% {
-    opacity: 0;
+@keyframes quickspin {
+  from {
+    transform: rotate(0deg);
   }
 
-  15%,
-  70% {
-    opacity: 1;
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -37,4 +24,10 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+
+/* Remove emulator warning */
+.firebase-emulator-warning {
+  display: none;
 }

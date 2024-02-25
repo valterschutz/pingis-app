@@ -134,7 +134,7 @@ function Stats() {
     ],
   };
 
-  return <div className="section my-auto px-1 py-3">
+  return <div className="bg-white p-4">
     <Bar data={winLossDrawData} options={winLossDrawOptions} />
     <Bar data={winRatioData} options={winRatioOptions} />
   </div>

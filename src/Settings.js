@@ -1,15 +1,14 @@
 import React, { useContext } from 'react'
 import { useSignOut } from 'react-firebase-hooks/auth';
 import { FirebaseContext } from './contexts';
-import InfoBar from './components/InfoBar';
+import BigButton from './components/BigButton';
 
 function Settings() {
   const [app, auth, db] = useContext(FirebaseContext)
   const [signOut, loading, error] = useSignOut(auth);
-  return <>
-    <button className="button is-link" onClick={() => signOut()}>Log out</button>
-    {error ? <InfoBar text={error.message} modifier="is-danger" /> : null}
-  </>
+  return <div className="flex flex-col flex-grow justify-center items-center">
+    <BigButton text="Log out" onClick={() => signOut()} />
+  </div>
 }
 
 export default Settings

@@ -1,9 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { connectAuthEmulator, getAuth } from 'firebase/auth'
 import { getFirestore, collection, getDocs, connectFirestoreEmulator } from 'firebase/firestore';
-import { useState, useContext } from 'react';
-import Entries from './Entries';
-import Stats from './Stats';
 import { FirebaseContext, PlayersContext, MatchesContext } from './contexts';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -34,7 +31,7 @@ function App() {
   const [user, loading, error] = useAuthState(auth);
 
   return (
-    <div className="App">
+    <div className="App bg-apricot min-h-screen flex flex-col font-sans">
       <FirebaseContext.Provider value={[app, auth, db]}>
         <PlayersContext.Provider value={[playersData, playersLoading, playersError, playersSnapshot]}>
           <MatchesContext.Provider value={[matchesData, matchesLoading, matchesError, matchesSnapshot]}>
