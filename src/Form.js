@@ -9,7 +9,7 @@ export default function Form({ buttonText, buttonFn }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  return <div className="mt-32 flex flex-col justify-center items-center">
+  return <div className="flex flex-col justify-center items-center">
     <img className="max-h-60" src={logo} alt="logo" />
     <div className="flex flex-col justify-center items-center">
       <div className="relative mb-4">

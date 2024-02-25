@@ -7,12 +7,27 @@ import BigButton from './components/BigButton';
 import InfoBox from './components/InfoBox';
 
 function Entries() {
-  const [app, _, db] = useContext(FirebaseContext)
+  const [app, auth, db] = useContext(FirebaseContext)
   const [playersData, playersLoading, playersError, playersSnapshot] = useContext(PlayersContext)
   const [matchesData, matchesLoading, matchesError, matchesSnapshot] = useContext(MatchesContext)
   const players = playersData || []
   const matches = matchesData || []
   const [fireIndex, setFireIndex] = useState(null)
+
+  // Component state for the UI
+  const [player1Index, setPlayer1Index] = useState(0)
+  const [player2Index, setPlayer2Index] = useState(1)
+  const [player1Score, setPlayer1Score] = useState(0)
+  const [player2Score, setPlayer2Score] = useState(0)
+  const [infoBoxMessage, setInfoBoxMessage] = useState('')
+  const [infoBoxType, setInfoBoxType] = useState('')
+  const player1 = players[player1Index]
+  const player2 = players[player2Index]
+
+  // Some players might not have a display name, so we'll set it to their first name
+  players.forEach(async (player) => {
+    player.displayName = player.displayName || player.firstName
+  })
 
 
   useEffect(() => {
@@ -66,58 +81,44 @@ function Entries() {
 
       if (player1Score === player2Score) {
         msg.text = `${player1Score} ${player2Score} draw`;
-        setSubmitText(`${player1Score} - ${player2Score} draw`)
+        setInfoBoxMessage(`${new Date(Date.now()).toLocaleTimeString()}: ${player1Score} - ${player2Score} draw`)
+        setInfoBoxType('info')
       } else {
         const winner = player1Score > player2Score ? player1 : player2
         const winnerScore = player1Score > player2Score ? player1Score : player2Score
         const loserScore = player1Score > player2Score ? player2Score : player1Score
         const loser = player1Score > player2Score ? player2 : player1
-        msg.text = `${winner.firstName} won with ${winnerScore} ${loserScore} against ${loser.firstName}`
-        setSubmitText(`${winner.firstName} won with ${winnerScore} - ${loserScore} against ${loser.firstName}`)
+        msg.text = `${winner.displayName} won with ${winnerScore} ${loserScore} against ${loser.displayName}`
+        setInfoBoxMessage(`${new Date(Date.now()).toLocaleTimeString()}: ${winner.displayName} won with ${winnerScore} - ${loserScore} against ${loser.displayName}`)
+        setInfoBoxType('info')
       }
       window.speechSynthesis.speak(msg);
 
       setPlayer1Score(0)
       setPlayer2Score(0)
-      setSubmitStatus('success')
-      setTimeout(() => {
-        setSubmitStatus(null)
-      }, 6000);
     } catch (error) {
-      console.log(`Error: ${error}`);
-      setSubmitStatus('error')
-      setSubmitText("Error")
-      setTimeout(() => {
-        setSubmitStatus(null)
-      }, 6000);
+      setInfoBoxMessage(`${new Date(Date.now()).toLocaleTimeString()}: ${error}`)
+      setInfoBoxType('error')
     }
   }
 
-  // Component state for the UI
-  const [player1Index, setPlayer1Index] = useState(0)
-  const [player2Index, setPlayer2Index] = useState(1)
-  const [player1Score, setPlayer1Score] = useState(0)
-  const [player2Score, setPlayer2Score] = useState(0)
-  const [submitStatus, setSubmitStatus] = useState(null)
-  const [submitText, setSubmitText] = useState("")
-  const isError = submitStatus === 'error'
-  const player1 = players[player1Index]
-  const player2 = players[player2Index]
 
-  return <div className="flex-grow flex flex-col justify-between items-center">
-    <div className="flex flex-col gap-8 justify-center items-center mt-36">
-      <div className="flex flex-col justify-center items-center">
-        <Dropdown items={players.map(p => p.firstName)} index={player1Index} setIndex={setPlayer1Index} fireIndex={fireIndex} />
-        <ScoreIncrementer score={player1Score} setScore={setPlayer1Score} />
+  return <>
+    <div className="flex-grow flex flex-col justify-center items-center">
+      <div className="flex flex-col gap-8 justify-center items-center">
+        <div className="flex flex-col justify-center items-center">
+          <Dropdown items={players.map(p => p.displayName)} index={player1Index} setIndex={setPlayer1Index} fireIndex={fireIndex} />
+          <ScoreIncrementer score={player1Score} setScore={setPlayer1Score} />
+        </div>
+        <div className="flex flex-col justify-center items-center">
+          <Dropdown items={players.map(p => p.displayName)} index={player2Index} setIndex={setPlayer2Index} fireIndex={fireIndex} />
+          <ScoreIncrementer score={player2Score} setScore={setPlayer2Score} />
+        </div>
+        <BigButton text="Submit" onClick={() => addMatchFn()} />
       </div>
-      <div className="flex flex-col justify-center items-center">
-        <Dropdown items={players.map(p => p.firstName)} index={player2Index} setIndex={setPlayer2Index} fireIndex={fireIndex} />
-        <ScoreIncrementer score={player2Score} setScore={setPlayer2Score} />
-      </div>
-      <BigButton text="Submit" onClick={() => addMatchFn()} />
-    </div>
-    <InfoBox text={submitText} isVisible={submitStatus === 'success'} />
-  </div >
+    </div >
+    <InfoBox message={infoBoxMessage} type={infoBoxType} />
+  </>
 }
 
 export default Entries

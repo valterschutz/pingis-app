@@ -12,20 +12,18 @@ export default function SignupForm() {
     loading,
     error,
   ] = useCreateUserWithEmailAndPassword(auth);
-  const errorMessage = error?.message
-  const [visibleError, setVisibleError] = useState(false)
+  const [infoBoxMessage, setInfoBoxMessage] = useState('')
+  const [infoBoxType, setInfoBoxType] = useState('')
 
   useEffect(() => {
     if (error) {
-      setVisibleError(true)
-      const timeout = setTimeout(() => {
-        setVisibleError(false)
-      }, 2000)
+      setInfoBoxMessage(`${new Date(Date.now()).toLocaleTimeString()}: ${error.message}`)
+      setInfoBoxType('error')
     }
   }, [error])
 
-  return <div className="flex-grow flex flex-col justify-between items-center">
+  return <div className="flex-grow flex flex-col justify-center items-center">
     <Form buttonText="Sign up" buttonFn={createUserWithEmailAndPassword} />
-    <InfoBox text={errorMessage} isVisible={visibleError} />
+    <InfoBox message={infoBoxMessage} type={infoBoxType} />
   </div >
 }
