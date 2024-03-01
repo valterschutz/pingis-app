@@ -31,3 +31,125 @@ input[type=number] {
 .firebase-emulator-warning {
   display: none;
 }
+
+/* Spinner for loading buttons */
+.lds-dual-ring {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+}
+
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin: 4px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pencil {
+  0% {
+    transition: border-color 0.5s ease-in-out 0.25s;
+    border-color: #F4900C #D53228 #D53228 #D53228;
+    top: 0%;
+    left: 0%;
+  }
+
+  25% {
+    transition: border-color 0.5s ease-in-out 0.25s;
+    border-color: #D53228 #F4900C #D53228 #D53228;
+    top: 0%;
+    right: 0%;
+  }
+
+  50% {
+    transition: border-color 0.5s ease-in-out 0.25s;
+    border-color: #D53228 #D53228 #F4900C #D53228;
+    top: 100%;
+    right: 0%;
+  }
+
+  75% {
+    transition: border-color 0.5s ease-in-out 0.25s;
+    border-color: #D53228 #D53228 #D53228 #F4900C;
+    top: 100%;
+    right: 100%;
+  }
+
+  100% {
+    transition: border-color 0.5s ease-in-out 0.25s;
+    border-color: #F4900C #D53228 #D53228 #D53228;
+    top: 0%;
+    right: 100%;
+  }
+}
+
+.pencil-border {
+  border: 6px solid #fff;
+  animation: pencil 2s infinite linear;
+}
+
+.fire-gradient {
+  background: linear-gradient(221deg, #d53228, #f4900c);
+  background-size: 400% 400%;
+
+  -webkit-animation: AnimationName 2s ease infinite;
+  -moz-animation: AnimationName 2s ease infinite;
+  animation: AnimationName 2s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+  0% {
+    background-position: 0% 94%
+  }
+
+  50% {
+    background-position: 100% 7%
+  }
+
+  100% {
+    background-position: 0% 94%
+  }
+}
+
+@-moz-keyframes AnimationName {
+  0% {
+    background-position: 0% 94%
+  }
+
+  50% {
+    background-position: 100% 7%
+  }
+
+  100% {
+    background-position: 0% 94%
+  }
+}
+
+@keyframes AnimationName {
+  0% {
+    background-position: 0% 94%
+  }
+
+  50% {
+    background-position: 100% 7%
+  }
+
+  100% {
+    background-position: 0% 94%
+  }
+}
