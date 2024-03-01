@@ -40,6 +40,7 @@ function Settings() {
 
   const saveUndoTimeout = () => {
     setSettings(prevSettings => { return { ...prevSettings, undoTimeout: parseInt(undoTimeoutText) } })
+    console.log(`Undo timeout updated to ${undoTimeoutText} seconds`);
     setInfoBoxMessage(`${new Date(Date.now()).toLocaleTimeString()}: Undo timeout updated to ${undoTimeoutText} seconds`)
     setInfoBoxType('success')
   }
@@ -47,14 +48,14 @@ function Settings() {
   return <div className="flex flex-col flex-grow justify-center items-center gap-24">
     <div className="flex flex-col justify-center items-center gap-4">
       <h2 className="font-kanit text-4xl text-darkbrown font-bold tracking-wider underline">Profile info</h2>
-      <div className="flex flex-col items-start w-96">
+      <div className="flex flex-col items-center w-96">
         <h3 className="font-kanit text-2xl text-darkbrown mb-1 ml-1">Display name</h3>
         <div className="flex items-center justify-center gap-2">
           <input placeholder="Display name" className="px-2 shadow-md bg-white rounded-lg h-10 text-lg w-60" type="text" value={inputDisplayName} onChange={e => setInputDisplayName(e.target.value)} />
-          <button className="bg-pingpongred hover:bg-scarlet text-white text-xl font-bold w-16 h-10 rounded-lg" onClick={saveDisplayName}>Save</button>
+          <button className="bg-pingpongred hover:bg-scarlet text-white font-kanit text-xl font-bold w-16 h-10 rounded-lg" onClick={saveDisplayName}>Save</button>
         </div>
       </div>
-      <div className="flex flex-col items-start gap-2 w-96">
+      <div className="flex flex-col items-center gap-2 w-96">
         <h3 className="font-kanit text-2xl text-darkbrown mb-1 ml-1">Undo functionality</h3>
         <div className="flex items-center justify-center gap-2">
           <h4>Enabled?</h4>
@@ -64,8 +65,8 @@ function Settings() {
         </div>
         <div className="flex items-center justify-center gap-2">
           <h4>Timeout (s)</h4>
-          <input placeholder="10" className="px-2 shadow-md bg-white rounded-lg h-10 text-lg w-60" type="text" value={undoTimeoutText} onChange={e => setUndoTimeoutText(e.target.value)} />
-          <button className="bg-pingpongred hover:bg-scarlet text-white text-xl font-bold w-16 h-10 rounded-lg" onClick={saveUndoTimeout}>Save</button>
+          <input placeholder="10" className="px-2 shadow-md bg-white rounded-lg h-10 text-lg w-20" type="text" value={undoTimeoutText} onChange={e => setUndoTimeoutText(e.target.value)} />
+          <button className="bg-pingpongred hover:bg-scarlet text-white font-kanit text-xl font-bold w-16 h-10 rounded-lg" onClick={saveUndoTimeout}>Save</button>
         </div>
       </div>
     </div>
