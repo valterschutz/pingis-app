@@ -23,6 +23,7 @@ function Entries() {
   const [infoBoxType, setInfoBoxType] = useState('')
   const player1 = players[player1Index]
   const player2 = players[player2Index]
+  const [submitIsLoading, setSubmitIsLoading] = useState(false)
 
   // Some players might not have a display name, so we'll set it to their first name
   players.forEach(async (player) => {
@@ -67,6 +68,7 @@ function Entries() {
 
   const addMatchFn = async () => {
     try {
+      setSubmitIsLoading(true)
       await addDoc(collection(db, 'matches'), {
         player1: doc(db, 'players', playersSnapshot.docs[player1Index].id),
         player2: doc(db, 'players', playersSnapshot.docs[player2Index].id),
@@ -74,6 +76,7 @@ function Entries() {
         player2Score: player2Score,
         when: serverTimestamp()
       })
+      setSubmitIsLoading(false)
 
       // Text to speech stuff
       let msg = new SpeechSynthesisUtterance();
@@ -114,7 +117,7 @@ function Entries() {
           <Dropdown items={players.map(p => p.displayName)} index={player2Index} setIndex={setPlayer2Index} fireIndex={fireIndex} />
           <ScoreIncrementer score={player2Score} setScore={setPlayer2Score} />
         </div>
-        <BigButton text="Submit" onClick={() => addMatchFn()} />
+        <BigButton text="Submit" onClick={() => addMatchFn()} isLoading={submitIsLoading} />
       </div>
     </div >
     <InfoBox message={infoBoxMessage} type={infoBoxType} />
