@@ -1,9 +1,10 @@
 import { initializeApp } from 'firebase/app';
 import { connectAuthEmulator, getAuth } from 'firebase/auth'
 import { getFirestore, collection, getDocs, connectFirestoreEmulator } from 'firebase/firestore';
-import { FirebaseContext, PlayersContext, MatchesContext } from './contexts';
+import { FirebaseContext, PlayersContext, MatchesContext, SettingsContext } from './contexts';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useState } from 'react';
 import LoggedIn from './LoggedIn';
 import LoggedOut from './LoggedOut';
 
@@ -30,12 +31,20 @@ function App() {
 
   const [user, loading, error] = useAuthState(auth);
 
+  // Settings that affect app behaviour. Probably modified in the Settings view
+  const [settings, setSettings] = useState({
+    undoEnabled: true,
+    undoTimeout: 10,
+  })
+
   return (
     <div className="App bg-apricot min-h-screen flex flex-col font-sans">
       <FirebaseContext.Provider value={[app, auth, db]}>
         <PlayersContext.Provider value={[playersData, playersLoading, playersError, playersSnapshot]}>
           <MatchesContext.Provider value={[matchesData, matchesLoading, matchesError, matchesSnapshot]}>
-            {user ? <LoggedIn /> : <LoggedOut />}
+            <SettingsContext.Provider value={[settings, setSettings]}>
+              {user ? <LoggedIn /> : <LoggedOut />}
+            </SettingsContext.Provider>
           </MatchesContext.Provider>
         </PlayersContext.Provider>
       </FirebaseContext.Provider>
