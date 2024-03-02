@@ -21,7 +21,27 @@ ChartJS.register(
   Legend
 );
 
-const winLossDrawOptions = {
+const winLossDrawPlotOptions = {
+  scales: {
+    x: {
+      ticks: {
+        font: {
+          size: 14, // Change font size for x-axis labels
+          weight: 'normal' // Change font weight for x-axis labels
+        }
+      }
+    },
+    y: {
+      ticks: {
+        font: {
+          size: 14, // Change font size for y-axis labels
+          weight: 'normal' // Change font weight for y-axis labels
+        }
+      }
+    }
+  },
+
+
   indexAxis: 'y',
   elements: {
     bar: {
@@ -33,15 +53,44 @@ const winLossDrawOptions = {
   plugins: {
     legend: {
       position: 'top',
+      labels: {
+        font: {
+          size: 14, // Change font size
+          weight: 'normal' // Change font weight
+        }
+      }
     },
     title: {
       display: true,
       text: 'Wins, losses, and draws',
+      font: {
+        size: 20,
+        weight: 'bold',
+      }
     },
   },
 };
 
-const winRatioOptions = {
+const winRatioPlotOptions = {
+  scales: {
+    x: {
+      ticks: {
+        font: {
+          size: 14, // Change font size for x-axis labels
+          weight: 'normal' // Change font weight for x-axis labels
+        }
+      }
+    },
+    y: {
+      ticks: {
+        font: {
+          size: 14, // Change font size for y-axis labels
+          weight: 'normal' // Change font weight for y-axis labels
+        }
+      }
+    }
+  },
+
   indexAxis: 'y',
   elements: {
     bar: {
@@ -57,6 +106,10 @@ const winRatioOptions = {
     title: {
       display: true,
       text: 'Win ratio',
+      font: {
+        size: 20,
+        weight: 'bold',
+      }
     },
   },
 };
@@ -65,7 +118,7 @@ function Stats() {
   const [playersData, playersLoading, playersError, playersSnapshot] = useContext(PlayersContext)
   const [matchesData, matchesLoading, matchesError, matchesSnapshot] = useContext(MatchesContext)
   const players = playersData || []
-  const playersNames = players.map(p => `${p.firstName} ${p.lastName}`)
+  const playersNames = players.map(p => p?.displayName || p.firstName)
   // Only count matches where at least one player has a strictly positive score
   // and both players have a non-negative score
   const filtMatchesData = matchesData.filter(match => (match.player1Score > 0 || match.player2Score > 0) && (match.player1Score >= 0 && match.player2Score >= 0))
@@ -76,8 +129,8 @@ function Stats() {
     const { player1: player1Doc, player2: player2Doc, player1Score, player2Score } = match
     const player1 = playersSnapshot.docs.find(doc => doc.id === player1Doc.id).data()
     const player2 = playersSnapshot.docs.find(doc => doc.id === player2Doc.id).data()
-    const player1Name = `${player1.firstName} ${player1.lastName}`
-    const player2Name = `${player2.firstName} ${player2.lastName}`
+    const player1Name = player1?.displayName || player1.firstName
+    const player2Name = player2?.displayName || player2.firstName
     if (player1Score > player2Score) {
       acc[player1Name].wins++
       acc[player2Name].losses++
@@ -94,7 +147,7 @@ function Stats() {
     return acc
   }, {}))
 
-  const winLossDrawData = {
+  const winLossDrawPlotData = {
     labels: playersNames,
     datasets: [
       {
@@ -121,25 +174,32 @@ function Stats() {
     ],
   };
 
-  const winRatioData = {
-    labels: playersNames,
+  const winRatioData = playersNames.map((name) => {
+    const wins = scoring[name].wins
+    const losses = scoring[name].losses
+    return losses !== 0 ? (wins / (wins + losses)).toFixed(2) : wins.toFixed(2);
+  })
+  // Now sorting the players by win ratio
+  const winRatioDataIndices = Array.from(winRatioData.keys())
+  const sortedWinRatioDataIndices = winRatioDataIndices.sort((a, b) => winRatioData[b] - winRatioData[a])
+  const sortedWinRatioData = sortedWinRatioDataIndices.map(i => winRatioData[i])
+  const sortedPlayersNames = sortedWinRatioDataIndices.map(i => playersNames[i])
+
+  const winRatioPlotData = {
+    labels: sortedPlayersNames,
     datasets: [
       {
         label: 'Win Ratio',
-        data: playersNames.map((name) => {
-          const wins = scoring[name].wins
-          const losses = scoring[name].losses
-          return losses !== 0 ? (wins / (wins + losses)).toFixed(2) : wins.toFixed(2);
-        }),
+        data: sortedWinRatioData,
         borderColor: 'hsl(219, 100%, 50%)',
         backgroundColor: 'hsla(219, 100%, 50%, 0.5)',
       },
     ],
   };
 
-  return <div className="bg-white p-4">
-    <Bar data={winLossDrawData} options={winLossDrawOptions} />
-    <Bar data={winRatioData} options={winRatioOptions} />
+  return <div className="bg-white p-4 flex flex-col gap-2">
+    <Bar data={winLossDrawPlotData} options={winLossDrawPlotOptions} />
+    <Bar data={winRatioPlotData} options={winRatioPlotOptions} />
   </div>
 
 }
