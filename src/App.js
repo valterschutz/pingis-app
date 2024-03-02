@@ -1,12 +1,13 @@
 import { initializeApp } from 'firebase/app';
 import { connectAuthEmulator, getAuth } from 'firebase/auth'
 import { getFirestore, collection, getDocs, connectFirestoreEmulator } from 'firebase/firestore';
-import { FirebaseContext, PlayersContext, MatchesContext, SettingsContext } from './contexts';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { FirebaseContext } from './contexts';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useState } from 'react';
 import LoggedIn from './LoggedIn';
 import LoggedOut from './LoggedOut';
+
+// TODO: when adding a match, save who added the match
 
 const firebaseConfig = {
   apiKey: "AIzaSyB0fVnzGA6ikLwft4VdHt8yrfrgqOKjI7M",
@@ -26,27 +27,12 @@ const auth = getAuth(app)
 // connectAuthEmulator(auth, 'http://localhost:9099')
 
 function App() {
-  const [playersData, playersLoading, playersError, playersSnapshot] = useCollectionData(collection(db, 'players'))
-  const [matchesData, matchesLoading, matchesError, matchesSnapshot] = useCollectionData(collection(db, 'matches'))
-
   const [user, loading, error] = useAuthState(auth);
-
-  // Settings that affect app behaviour. Probably modified in the Settings view
-  const [settings, setSettings] = useState({
-    undoEnabled: true,
-    undoTimeout: 10,
-  })
 
   return (
     <div className="App bg-apricot min-h-screen flex flex-col font-sans">
       <FirebaseContext.Provider value={[app, auth, db]}>
-        <PlayersContext.Provider value={[playersData, playersLoading, playersError, playersSnapshot]}>
-          <MatchesContext.Provider value={[matchesData, matchesLoading, matchesError, matchesSnapshot]}>
-            <SettingsContext.Provider value={[settings, setSettings]}>
-              {user ? <LoggedIn /> : <LoggedOut />}
-            </SettingsContext.Provider>
-          </MatchesContext.Provider>
-        </PlayersContext.Provider>
+        {user ? <LoggedIn /> : <LoggedOut />}
       </FirebaseContext.Provider>
     </div>
   );
