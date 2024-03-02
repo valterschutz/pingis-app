@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import Entries from './Entries'
+import Entry from './Entry'
 import Stats from './Stats'
+import MatchesView from './MatchesView'
 import Settings from './Settings'
 import Navbar from './components/Navbar'
 import { MatchesContext, PlayersContext, SettingsContext, FirebaseContext } from './contexts'
@@ -24,10 +25,11 @@ function LoggedIn() {
   return <PlayersContext.Provider value={[playersData, playersLoading, playersError, playersSnapshot]}>
     <MatchesContext.Provider value={[matchesData, matchesLoading, matchesError, matchesSnapshot]}>
       <SettingsContext.Provider value={[settings, setSettings]}>
-        <Navbar choices={['Entries', 'Stats', 'Settings']} fn={setTabIndex} />
-        {tabIndex === 0 && <Entries />}
-        {tabIndex === 1 && <Stats />}
-        {tabIndex === 2 && <Settings />}
+        <Navbar choices={['Entry', 'Matches', 'Stats', 'Settings']} fn={setTabIndex} />
+        {tabIndex === 0 && <Entry />}
+        {tabIndex === 1 && <MatchesView />}
+        {tabIndex === 2 && <Stats />}
+        {tabIndex === 3 && <Settings />}
       </SettingsContext.Provider>
     </MatchesContext.Provider>
   </PlayersContext.Provider>

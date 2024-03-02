@@ -8,6 +8,7 @@ module.exports = {
       sans: ['Inter', 'sans-serif'],
       kanit: ['Kanit', 'sans-serif'],
       serif: ['Merriweather', 'serif'],
+      kode: ['Kode Mono', 'monospace']
     },
     extend: {
       colors: {

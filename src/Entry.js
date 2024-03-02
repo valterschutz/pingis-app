@@ -7,7 +7,7 @@ import BigButton from './components/BigButton';
 import InfoBox from './components/InfoBox';
 import PlayerMenu from './components/PlayerMenu';
 
-function Entries() {
+function Entry() {
   const [app, auth, db] = useContext(FirebaseContext)
   const [settings, setSettings] = useContext(SettingsContext)
   const [playersData, playersLoading, playersError, playersSnapshot] = useContext(PlayersContext)
@@ -156,4 +156,4 @@ function Entries() {
   </>
 }
 
-export default Entries
+export default Entry
