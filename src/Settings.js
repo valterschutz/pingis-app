@@ -4,7 +4,7 @@ import { FirebaseContext, SettingsContext } from './contexts';
 import BigButton from './components/BigButton';
 import { useAuthState, useUpdateProfile } from 'react-firebase-hooks/auth';
 import InfoBox from './components/InfoBox';
-import { collection, updateDoc, query, where, getDocs } from 'firebase/firestore';
+import { collection, updateDoc, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 import ToggleSwitch from './components/ToggleSwitch';
 
 function Settings() {
@@ -16,24 +16,42 @@ function Settings() {
   const [infoBoxMessage, setInfoBoxMessage] = useState('')
   const [infoBoxType, setInfoBoxType] = useState('')
 
-  // Settings that the user can change
   const [inputDisplayName, setInputDisplayName] = useState(user.displayName || '')
   const [undoTimeoutText, setUndoTimeoutText] = useState(String(settings.undoTimeout) || '10')
 
   const saveDisplayName = async () => {
-    updateProfile({ displayName: inputDisplayName })
-    // Also update the player document in the database
-    const q = query(collection(db, 'players'), where('uid', '==', user.uid))
-    const querySnapshot = await getDocs(q)
-    if (!querySnapshot.empty) {
-      const playerDocRef = querySnapshot.docs[0].ref
-      await updateDoc(playerDocRef, { displayName: inputDisplayName })
-      console.log('Display name updated');
-      setInfoBoxMessage(`${new Date(Date.now()).toLocaleTimeString()}: Display name updated`)
-      setInfoBoxType('success')
-    } else {
-      console.log('No player document found for this user');
-      setInfoBoxMessage(`${new Date(Date.now()).toLocaleTimeString()}: No player document found for this user`)
+    try {
+      // Update auth user profile
+      updateProfile({ displayName: inputDisplayName })
+      // Also update the player document in the database
+      const userDoc = await getDoc(doc(db, 'users', user.uid))
+      if (userDoc.exists()) {
+        const userData = userDoc.data()
+        if ('player' in userData) {
+          const playerDoc = await getDoc(doc(db, 'players', userData.player))
+          if (playerDoc.exists()) {
+            await updateDoc(doc(db, 'players', userData.player), { displayName: inputDisplayName })
+            console.log(`Display name updated to "${inputDisplayName}"`);
+            setInfoBoxMessage(`${new Date(Date.now()).toLocaleTimeString()}: Display name updated to "${inputDisplayName}"`)
+            setInfoBoxType('success')
+          } else {
+            console.error(`Player document ${userData.player} does not exist`);
+            setInfoBoxMessage(`${new Date(Date.now()).toLocaleTimeString()}: Player document ${userData.player} does not exist`)
+            setInfoBoxType('error')
+          }
+        } else {
+          console.error('User document does not contain a player reference');
+          setInfoBoxMessage(`${new Date(Date.now()).toLocaleTimeString()}: User document does not contain a player reference`)
+          setInfoBoxType('error')
+        }
+      } else {
+        console.log('No user document found for this user');
+        setInfoBoxMessage(`${new Date(Date.now()).toLocaleTimeString()}: No user document found for this user`)
+        setInfoBoxType('error')
+      }
+    } catch (error) {
+      console.error('Error updating display name:', error);
+      setInfoBoxMessage(`${new Date(Date.now()).toLocaleTimeString()}: Error updating display name: ${error}`)
       setInfoBoxType('error')
     }
   }
