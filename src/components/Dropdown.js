@@ -32,7 +32,7 @@ export default function Dropdown({ items, index, setIndex, fireIndex }) {
     {
       isActive && <div id="dropdown-menu" role="menu">
         <div className="flex flex-col gap-1">
-          {filtItems.map((item, i) => <AnimatedButton key={i} classes={`${isActive ? 'visible' : 'invisible'} brightness-75 text-center h-10 rounded-lg min-w-80 px-2 text-2xl text-white ${index === fireIndex ? 'fire-gradient' : 'bg-darkbrown text-black'} shadow-md`} aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => { setIndex(i); setIsActive(!isActive) }}>
+          {filtItems.map((item, i) => <AnimatedButton key={i} classes={`${isActive ? 'visible' : 'invisible'} brightness-75 text-center h-10 rounded-lg min-w-80 px-2 text-2xl text-white ${i === fireIndex ? 'fire-gradient' : 'bg-darkbrown text-black'} shadow-md`} aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => { setIndex(i); setIsActive(!isActive) }}>
             {i === fireIndex ? `🔥 ${item} 🔥` : item}
           </AnimatedButton>)}
         </div>
