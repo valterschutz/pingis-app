@@ -5,6 +5,7 @@ import { FirebaseContext, PlayersContext, MatchesContext, SettingsContext } from
 import ScoreIncrementer from './components/ScoreIncrementer';
 import BigButton from './components/BigButton';
 import InfoBox from './components/InfoBox';
+import PlayerMenu from './components/PlayerMenu';
 
 function Entries() {
   const [app, auth, db] = useContext(FirebaseContext)
@@ -141,7 +142,7 @@ function Entries() {
           <Dropdown items={players.map(p => p.displayName)} index={player1Index} setIndex={setPlayer1Index} fireIndex={fireIndex} />
           <ScoreIncrementer score={player1Score} setScore={setPlayer1Score} />
         </div>
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center gap-2">
           <Dropdown items={players.map(p => p.displayName)} index={player2Index} setIndex={setPlayer2Index} fireIndex={fireIndex} />
           <ScoreIncrementer score={player2Score} setScore={setPlayer2Score} />
         </div>
