@@ -26,14 +26,14 @@ export default function Dropdown({ items, index, setIndex, fireIndex }) {
   return <div ref={dropdownRef} className="max-h-36 overflow-y-auto rounded-lg">
     {!isActive ?
 
-      <AnimatedButton classes={`${isActive ? 'invisible' : 'visible'} text-center h-12 rounded-lg min-w-80 px-2 text-2xl text-white ${index === fireIndex ? 'fire-gradient' : 'bg-darkbrown text-black'} shadow-md`} aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => setIsActive(!isActive)}>
+      <AnimatedButton classes={`${isActive ? 'invisible' : 'visible'} text-center h-12 rounded-lg min-w-80 px-2 text-2xl text-white ${index === fireIndex ? 'fire-gradient' : 'bg-scarlet text-white'} shadow-md`} aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => setIsActive(!isActive)}>
         {index === fireIndex ? `🔥 ${selectedItem} 🔥` : selectedItem}
       </AnimatedButton>
       :
 
       <div id="dropdown-menu" role="menu">
-        <div className="flex flex-col rounded-lg divide-y-2 divide-gray-800">
-          {filtItems.map((item, i) => <AnimatedButton key={i} classes={`${isActive ? 'visible' : 'invisible'} first:rounded-t-lg last:rounded-b-lg brightness-75 hover:brightness-100 text-center h-12 min-w-80 px-2 text-2xl text-white ${i === fireIndex ? 'fire-gradient' : 'bg-darkbrown text-black'} shadow-md`} aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => { setIndex(i); setIsActive(!isActive) }}>
+        <div className="flex flex-col rounded-lg divide-y-2 divide-apricot/100">
+          {filtItems.map((item, i) => <AnimatedButton key={i} classes={`${isActive ? 'visible' : 'invisible'} first:rounded-t-lg last:rounded-b-lg brightness-75 hover:brightness-100 text-center h-12 min-w-80 px-2 text-2xl text-white ${i === fireIndex ? 'fire-gradient' : 'bg-scarlet text-white'} shadow-md`} aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => { setIndex(i); setIsActive(!isActive) }}>
             {i === fireIndex ? `🔥 ${item} 🔥` : item}
           </AnimatedButton>)}
         </div>
