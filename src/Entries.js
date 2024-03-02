@@ -126,6 +126,8 @@ function Entries() {
       setPlayer1Score(0)
       setPlayer2Score(0)
     } catch (error) {
+      // Loading might have been set to true right before the error, so we'll set it to false again
+      setSubmitIsLoading(false)
       setInfoBoxMessage(`${new Date(Date.now()).toLocaleTimeString()}: ${error}`)
       setInfoBoxType('error')
     }
