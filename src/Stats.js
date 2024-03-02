@@ -65,7 +65,9 @@ function Stats() {
   const [playersData, playersLoading, playersError, playersSnapshot] = useContext(PlayersContext)
   const [matchesData, matchesLoading, matchesError, matchesSnapshot] = useContext(MatchesContext)
   const players = playersData || []
-  const playersNames = players.map(p => `${p.firstName} ${p.lastName}`)
+  console.log("Players:", players);
+  const playersNames = players.map(p => p?.displayName || p.firstName)
+  console.log("Player names:", playersNames);
   // Only count matches where at least one player has a strictly positive score
   // and both players have a non-negative score
   const filtMatchesData = matchesData.filter(match => (match.player1Score > 0 || match.player2Score > 0) && (match.player1Score >= 0 && match.player2Score >= 0))
@@ -76,8 +78,9 @@ function Stats() {
     const { player1: player1Doc, player2: player2Doc, player1Score, player2Score } = match
     const player1 = playersSnapshot.docs.find(doc => doc.id === player1Doc.id).data()
     const player2 = playersSnapshot.docs.find(doc => doc.id === player2Doc.id).data()
-    const player1Name = `${player1.firstName} ${player1.lastName}`
-    const player2Name = `${player2.firstName} ${player2.lastName}`
+    const player1Name = player1?.displayName || player1.firstName
+    const player2Name = player2?.displayName || player2.firstName
+    console.log(player1Name, player2Name, player1Score, player2Score)
     if (player1Score > player2Score) {
       acc[player1Name].wins++
       acc[player2Name].losses++
