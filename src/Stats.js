@@ -65,8 +65,11 @@ function Stats() {
   const [playersData, playersLoading, playersError, playersSnapshot] = useContext(PlayersContext)
   const [matchesData, matchesLoading, matchesError, matchesSnapshot] = useContext(MatchesContext)
   const players = playersData || []
-  const matches = matchesData || []
   const playersNames = players.map(p => `${p.firstName} ${p.lastName}`)
+  // Only count matches where at least one player has a strictly positive score
+  // and both players have a non-negative score
+  const filtMatchesData = matchesData.filter(match => (match.player1Score > 0 || match.player2Score > 0) && (match.player1Score >= 0 && match.player2Score >= 0))
+  const matches = filtMatchesData || []
 
   // Loop through all matches and calculate wins, losses, and draws for each player
   const scoring = matches.reduce((acc, match) => {
