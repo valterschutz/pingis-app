@@ -16,7 +16,7 @@ function Settings() {
   const [infoBoxMessage, setInfoBoxMessage] = useState('')
   const [infoBoxType, setInfoBoxType] = useState('')
 
-  const [inputDisplayName, setInputDisplayName] = useState(user.displayName || '')
+  const [inputDisplayName, setInputDisplayName] = useState(user?.displayName || '')
   const [undoTimeoutText, setUndoTimeoutText] = useState(String(settings.undoTimeout) || '10')
 
   const saveDisplayName = async () => {
