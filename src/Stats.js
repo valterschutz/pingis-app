@@ -22,6 +22,26 @@ ChartJS.register(
 );
 
 const winLossDrawOptions = {
+  scales: {
+    x: {
+      ticks: {
+        font: {
+          size: 14, // Change font size for x-axis labels
+          weight: 'normal' // Change font weight for x-axis labels
+        }
+      }
+    },
+    y: {
+      ticks: {
+        font: {
+          size: 14, // Change font size for y-axis labels
+          weight: 'normal' // Change font weight for y-axis labels
+        }
+      }
+    }
+  },
+
+
   indexAxis: 'y',
   elements: {
     bar: {
@@ -33,15 +53,44 @@ const winLossDrawOptions = {
   plugins: {
     legend: {
       position: 'top',
+      labels: {
+        font: {
+          size: 14, // Change font size
+          weight: 'normal' // Change font weight
+        }
+      }
     },
     title: {
       display: true,
       text: 'Wins, losses, and draws',
+      font: {
+        size: 20,
+        weight: 'bold',
+      }
     },
   },
 };
 
 const winRatioOptions = {
+  scales: {
+    x: {
+      ticks: {
+        font: {
+          size: 14, // Change font size for x-axis labels
+          weight: 'normal' // Change font weight for x-axis labels
+        }
+      }
+    },
+    y: {
+      ticks: {
+        font: {
+          size: 14, // Change font size for y-axis labels
+          weight: 'normal' // Change font weight for y-axis labels
+        }
+      }
+    }
+  },
+
   indexAxis: 'y',
   elements: {
     bar: {
@@ -57,6 +106,10 @@ const winRatioOptions = {
     title: {
       display: true,
       text: 'Win ratio',
+      font: {
+        size: 20,
+        weight: 'bold',
+      }
     },
   },
 };
@@ -140,7 +193,7 @@ function Stats() {
     ],
   };
 
-  return <div className="bg-white p-4">
+  return <div className="bg-white p-4 flex flex-col gap-2">
     <Bar data={winLossDrawData} options={winLossDrawOptions} />
     <Bar data={winRatioData} options={winRatioOptions} />
   </div>
