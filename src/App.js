@@ -7,8 +7,6 @@ import { useState } from 'react';
 import LoggedIn from './LoggedIn';
 import LoggedOut from './LoggedOut';
 
-// TODO: when adding a match, save who added the match
-
 const firebaseConfig = {
   apiKey: "AIzaSyB0fVnzGA6ikLwft4VdHt8yrfrgqOKjI7M",
   authDomain: "pingis-app.firebaseapp.com",

@@ -91,7 +91,8 @@ function Entries() {
         player2: doc(db, 'players', playersSnapshot.docs[player2Index].id),
         player1Score: player1Score,
         player2Score: player2Score,
-        when: serverTimestamp()
+        when: serverTimestamp(),
+        addedByUID: auth.currentUser.uid,
       })
       setSubmitIsLoading(false)
       // Allow removing of doc for 10 seconds afterwards (if undo is enabled in settings)
