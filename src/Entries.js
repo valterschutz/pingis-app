@@ -134,8 +134,8 @@ function Entries() {
 
   return <>
     <div className="flex-grow flex flex-col justify-center items-center">
-      <div className="flex flex-col gap-8 justify-center items-center">
-        <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col gap-12 justify-center items-center">
+        <div className="flex flex-col justify-center items-center gap-2">
           <Dropdown items={players.map(p => p.displayName)} index={player1Index} setIndex={setPlayer1Index} fireIndex={fireIndex} />
           <ScoreIncrementer score={player1Score} setScore={setPlayer1Score} />
         </div>

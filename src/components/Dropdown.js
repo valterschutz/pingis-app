@@ -25,19 +25,16 @@ export default function Dropdown({ items, index, setIndex, fireIndex }) {
 
   return <div ref={dropdownRef}>
     <div>
-      <AnimatedButton classes={`${isActive ? 'invisible' : 'visible'} text-center h-10 rounded-lg w-40 text-2xl text-white ${index === fireIndex ? 'fire-gradient' : 'bg-darkbrown text-black'} shadow-md`} aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => setIsActive(!isActive)}>
+      <AnimatedButton classes={`${isActive ? 'invisible' : 'visible'} text-center h-10 rounded-lg min-w-80 px-2 text-2xl text-white ${index === fireIndex ? 'fire-gradient' : 'bg-darkbrown text-black'} shadow-md`} aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => setIsActive(!isActive)}>
         {index === fireIndex ? `🔥 ${selectedItem} 🔥` : selectedItem}
       </AnimatedButton>
     </div>
     {
       isActive && <div id="dropdown-menu" role="menu">
-        <div className="divide-y flex flex-col gap-1">
-          {filtItems.map((item, i) => <div className={`hover:cursor-pointer brightness-75 flex flex-col justify-center text-center h-10 rounded-lg w-40 text-white text-2xl ${i === fireIndex ? 'fire-gradient' : 'bg-darkbrown'}`} key={i} onClick={() => {
-            setIndex(i)
-            setIsActive(false)
-          }}>
+        <div className="flex flex-col gap-1">
+          {filtItems.map((item, i) => <AnimatedButton classes={`${isActive ? 'visible' : 'invisible'} brightness-75 text-center h-10 rounded-lg min-w-80 px-2 text-2xl text-white ${index === fireIndex ? 'fire-gradient' : 'bg-darkbrown text-black'} shadow-md`} aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => setIsActive(!isActive)}>
             {i === fireIndex ? `🔥 ${item} 🔥` : item}
-          </div>)}
+          </AnimatedButton>)}
         </div>
       </div>
     }
