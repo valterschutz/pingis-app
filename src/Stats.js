@@ -121,8 +121,8 @@ function Stats() {
   const playersNames = players.map(p => p?.displayName || p.firstName)
   // Only count matches where at least one player has a strictly positive score
   // and both players have a non-negative score
-  const filtMatchesData = matchesData.filter(match => (match.player1Score > 0 || match.player2Score > 0) && (match.player1Score >= 0 && match.player2Score >= 0))
-  const matches = filtMatchesData || []
+  const m = matchesData || []
+  const matches = m.filter(match => (match.player1Score > 0 || match.player2Score > 0) && (match.player1Score >= 0 && match.player2Score >= 0))
 
   // Loop through all matches and calculate wins, losses, and draws for each player
   const scoring = matches.reduce((acc, match) => {

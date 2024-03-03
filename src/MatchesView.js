@@ -5,7 +5,7 @@ import { MatchesContext } from "./contexts"
 export default function MatchesView() {
   // Get latest 10 matches
   const [matchesData, matchesLoading, matchesError, matchesSnapshot] = useContext(MatchesContext)
-  const sortedMatches = matchesData
+  const sortedMatches = matchesData || []
   sortedMatches.sort((a, b) => b.when - a.when)
   const latestMatches = sortedMatches.slice(0, 10)
 
