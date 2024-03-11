@@ -10,9 +10,11 @@ export default function MatchesView() {
   const latestMatches = sortedMatches.slice(0, 10)
 
   return (
-    <div className="flex flex-col flex-grow justify-center items-center gap-6 px-2">
-      <h2 className="underline text-4xl font-kanit">Last 10 matches</h2>
-      {latestMatches.map((match, idx) => <MatchView key={idx} match={match} />)}
+    <div className="flex-grow flex flex-row justify-center">
+      <div className="max-w-xl flex-grow flex flex-col justify-center items-center gap-6 px-2">
+        <h2 className="underline text-4xl font-kanit">Last 10 matches</h2>
+        {latestMatches.map((match, idx) => <MatchView key={idx} match={match} />)}
+      </div>
     </div>
   )
 }
