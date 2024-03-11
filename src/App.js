@@ -28,7 +28,7 @@ function App() {
   const [user, loading, error] = useAuthState(auth);
 
   return (
-    <div className="App bg-apricot min-h-screen flex flex-col font-sans">
+    <div className="App bg-apricot min-h-screen flex flex-col items-stretch font-sans">
       <FirebaseContext.Provider value={[app, auth, db]}>
         {user ? <LoggedIn /> : <LoggedOut />}
       </FirebaseContext.Provider>

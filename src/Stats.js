@@ -33,6 +33,7 @@ const winLossDrawPlotOptions = {
     },
     y: {
       ticks: {
+        autoSkip: false,
         font: {
           size: 14, // Change font size for y-axis labels
           weight: 'normal' // Change font weight for y-axis labels
@@ -49,7 +50,8 @@ const winLossDrawPlotOptions = {
     },
   },
   responsive: true,
-  aspectRatio: 1,
+  //   aspectRatio: 1,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
       position: 'top',
@@ -83,6 +85,7 @@ const winRatioPlotOptions = {
     },
     y: {
       ticks: {
+        autoSkip: false,
         font: {
           size: 14, // Change font size for y-axis labels
           weight: 'normal' // Change font weight for y-axis labels
@@ -98,7 +101,8 @@ const winRatioPlotOptions = {
     },
   },
   responsive: true,
-  aspectRatio: 1,
+  //   aspectRatio: 1,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
       display: false,
@@ -147,26 +151,34 @@ function Stats() {
     return acc
   }, {}))
 
+  // Now sorting the players by matches played
+  // Sort player names by matches played
+  const sortedByMatchesPlayedPlayersNames = playersNames.sort((a, b) => {
+    const aMatches = scoring[a].wins + scoring[a].losses + scoring[a].draws
+    const bMatches = scoring[b].wins + scoring[b].losses + scoring[b].draws
+    return bMatches - aMatches
+  })
+
   const winLossDrawPlotData = {
-    labels: playersNames,
+    labels: sortedByMatchesPlayedPlayersNames,
     datasets: [
       {
         label: 'Wins',
-        data: playersNames.map(playerName => scoring[playerName].wins),
+        data: sortedByMatchesPlayedPlayersNames.map(playerName => scoring[playerName].wins),
         borderColor: 'hsl(141, 71%, 48%)',
         backgroundColor: 'hsla(141, 71%, 48%, 0.5)',
         stack: 0,
       },
       {
         label: 'Losses',
-        data: playersNames.map(playerName => scoring[playerName].losses),
+        data: sortedByMatchesPlayedPlayersNames.map(playerName => scoring[playerName].losses),
         borderColor: 'hsl(348, 100%, 61%)',
         backgroundColor: 'hsla(348, 100%, 61%, 0.5)',
         stack: 0,
       },
       {
         label: 'Draws',
-        data: playersNames.map(playerName => scoring[playerName].draws),
+        data: sortedByMatchesPlayedPlayersNames.map(playerName => scoring[playerName].draws),
         borderColor: 'hsl(48, 100%, 67%)',
         backgroundColor: 'hsla(48, 100%, 67%, 0.5)',
         stack: 0,
@@ -197,9 +209,15 @@ function Stats() {
     ],
   };
 
+  const chartHeight = 40 * playersNames.length
+
   return <div className="bg-white p-4 flex flex-col gap-2">
-    <Bar data={winLossDrawPlotData} options={winLossDrawPlotOptions} />
-    <Bar data={winRatioPlotData} options={winRatioPlotOptions} />
+    <div style={{ height: chartHeight }}>
+      <Bar data={winLossDrawPlotData} options={winLossDrawPlotOptions} />
+    </div>
+    <div style={{ height: chartHeight }}>
+      <Bar data={winRatioPlotData} options={winRatioPlotOptions} />
+    </div>
   </div>
 
 }
